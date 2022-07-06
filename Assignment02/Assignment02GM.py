@@ -59,11 +59,11 @@ def FoobarFunction(Value):
     this function will let you know if your Value is a multiple of 3, 5 or 15. 
     It will return foo, bar, or foobar respectively. If it is not a multiple
     of any of those it will return "Not a multiple of 3, 5, or 15"
-    Value(3)
+    >>>FoobarFunction(3)
     foo
-    Value(5)
+    >>>FoobarFunction(5)
     bar
-    Value (15)
+    >>>FoobarFunction(15)
     foo, bar, foobar
     Value(17)
     Not a multiple of 3, 5, or 15
@@ -83,4 +83,4 @@ def FoobarFunction(Value):
     else:
         return "Not a multiple of 3, 5, or 15"
 
-
+help(FoobarFunction)
