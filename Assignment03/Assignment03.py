@@ -30,7 +30,7 @@ A[0]
 
 A[:,1]
 
-A[1], A[2]
+A[1:3]
 
 A[1, 2], A[1, 3], A[2, 2], A[2, 3]
 
@@ -63,19 +63,27 @@ C = np.log(B)
 
 C = np.nan_to_num(C, copy=True, nan=0.0, posinf=None, neginf=None)
 
+C
+
 # - square root
 
 D = np.sqrt(B) 
 
 D = np.nan_to_num(D, copy=True, nan=0.0, posinf=None, neginf=None)
 
+D
+
 # - square
 
 E = np.square(B)
 
+E
+
 # - absolute value
 
 F = np.absolute(B)
+
+F
 
 # 6. In 1992, Giancarlo Moschini and Karl Meilke published a paper to the/
 # Journal of Agricultural Economics. In this paper,/
@@ -95,10 +103,6 @@ X = np.array([[1, 20], [1, -40]])
 Y = np.array([[286], [88]]) 
 
 X_inv = np.linalg.inv(X)
-
-X.dot(X_inv)
-
-X_inv.dot(X)
 
 Z_soln = X_inv.dot(Y)
 
