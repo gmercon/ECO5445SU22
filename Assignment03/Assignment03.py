@@ -102,6 +102,7 @@ X = np.array([[1, 20], [1, -40]])
 
 Y = np.array([[286], [88]]) 
 
+# inverse of X is used to find solution
 X_inv = np.linalg.inv(X)
 
 Z_soln = X_inv.dot(Y)
@@ -113,5 +114,8 @@ print(Z_soln)
 Price = 3.3
 
 Quantity = 220 
+
+# check solution 
+X.dot(Z_soln)
 
 
