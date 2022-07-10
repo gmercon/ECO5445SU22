@@ -6,7 +6,6 @@ Created on Fri Jul  8 13:37:45 2022
 """
 import os 
 import numpy as np 
-import math 
 
 os.getcwd()
 os.chdir('C:\\Users\\Guillermo\\Documents\\GitHub\\ECO5445SU22\\Assignment03')
@@ -91,6 +90,24 @@ F = np.absolute(B)
 
 # Using the tools provided in the lecture, solve for the equilibrium price and quantity.
 
+X = np.array([[1, 20], [1, -40]])
+
+Y = np.array([[286], [88]]) 
+
+X_inv = np.linalg.inv(X)
+
+X.dot(X_inv)
+
+X_inv.dot(X)
+
+Z_soln = X_inv.dot(Y)
+
+print(Z_soln)
+
+# Equilibrium price and quantity are as follows
+
+Price = 3.3
+
+Quantity = 220 
 
 
- 
