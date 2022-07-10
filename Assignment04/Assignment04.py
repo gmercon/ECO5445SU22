@@ -32,11 +32,8 @@ Radius = .5
 DotsInside = 0 
 DotsOutside = 0 
 
-# used seed to test different number of trials without changing both variables
-np.random.seed(100)
 XrandomCord = np.random.uniform(0,1, Trials)
 
-np.random.seed(74)
 YrandomCord = np.random.uniform(0,1, Trials)
 
 
