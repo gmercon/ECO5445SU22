@@ -44,7 +44,7 @@ for i in range(Trials):
     # Then check if that line is shorter than or equal to the radius
     # if the Length of line is shorter than radius,
     # then the point falls in the circle
-    if (((Radius - X)**2) + ((Radius - Y)**2))**(1/2) <= Radius:
+    if np.sqrt(((Radius - X)**2) + ((Radius - Y)**2)) <= Radius: # oddly enough raising it to the 1/2 power is not as precise as np.sqrt
         DotsInside += 1
     else:
         DotsOutside += 1

@@ -50,11 +50,11 @@ np.sum(B, axis = 0)
 
 # - the cumulative sum of row values
 
-np.cumsum(B, axis = 1)
+np.cumsum(B, axis = 1) # Looking for a single value, so sum of them. This operation transforms current values to their cummulative sum per element (-2)
 
 # - the cumulative sum of column values
 
-np.cumsum(B,axis=0)
+np.cumsum(B,axis=0) # Looking for a single value, so sum of them. This operation transforms current values to their cummulative sum per element (-2)
 
 # 5. From array B, create new arrays containing the element-by-element:
 # - natural logarithm
