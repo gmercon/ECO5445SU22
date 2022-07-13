@@ -5,7 +5,7 @@ Created on Wed Jul 13 13:48:11 2022
 @author: Guillermo
 """
 
-#This project will follow a paper published in the American Economic Review. 
+# This project will follow a paper published in the American Economic Review. 
 # The purpose of the paper was to test for the presence of racial 
 # discrimination in the mortgage approval process. The dataset provided 
 # contains records of the 2,380 applicants for mortgages in Boston.
@@ -14,7 +14,14 @@ Created on Wed Jul 13 13:48:11 2022
 # 2. Read the paper as it provides a detailed discussion of the data and 
 # insight on the determinants of the probability of being approved. 
 
+import os
+import numpy as np
+import pandas as pd
 
+os.getcwd()
+git_path = 'C:\\Users\\Guillermo\\Documents\\GitHub\\ECO5445SU22\\Project\\Data'
+os.chdir(git_path)
+         
 # 3. Bring in the dataset provided within my repository. The variables in the 
 # dataset do not have intuitive names (e.g., the meaning of S3 is unclear). 
 # Referencing the data description and the AER paper, identify the qualitative 
@@ -23,6 +30,9 @@ Created on Wed Jul 13 13:48:11 2022
 # they have (somewhat) intuitive names. Be certain that the 
 # debt-to-income ratio, race, self-employed, marital status, and 
 # education indicator variables are included, among other variables.
+
+housing = pd.read_csv("hmda_sw.csv")
+
 
 # 4. Generate summary statistics on the set of variables selected, and explain 
 # the composition of the sample and of the characteristics of an average 
