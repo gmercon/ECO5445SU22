@@ -9,32 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-
 Assignment05______________________________________________________________________________
 
 2. Question 2 from assignment02: 
 
-Assign a variable name to each of the following and use Python to identify the data type of each variable:
+Assign a variable name to each of the following and use (R)Python to identify the data type of each variable:
 2
 2.0
 10j
@@ -55,9 +34,9 @@ class(TenJ)
 Phrase <- "2 cool for school"
 class(Phrase)
 
-ThisIs <- "True"
+ThisIs <- TRUE
 class(ThisIs)
- 
+
 ```
 
 
@@ -73,9 +52,11 @@ This question was part of an in-person interview where you were expected to writ
 ```{r}
 
 FoobarFunction <- function(A){
+  
 # FoobarFunction will inform you if the entered value is a multiple of 3, 5, or 15. 
 # It will display "foo", "bar", and "foobar" respectively.
 # Precondition: This function will not work by typing in strings. 
+# 
 # Examples below:
 #>>> FoobarFunction(30)
 # [1] "foobar"
@@ -88,30 +69,29 @@ FoobarFunction <- function(A){
 #>>> FoobarFunction(six)
 # Error in FoobarFunction(six) : object 'six' not found
 
-if ((as.integer(B/3)) == B/3) {
-Result <- "foo"
+if  ((as.integer(A/15)) == A/15) {
+return("foobar")
 }
-if ((as.integer(B/5)) == B/5) {
-Result <- "bar"
+if ((as.integer(A/3)) == A/3) {
+return("foo")
+}
+if ((as.integer(A/5)) == A/5) {
+return("bar")
 }
 
-if  ((as.integer(B/15)) == B/15) {
-Result <- "foobar"
-}
-else 
-Result <- "Not a multiple of 3, 5, or 15"
-return(Result)
+else {
+return("Not a multiple of 3, 5, or 15")
 } 
-
+}
 ```
 
 
 3. Bring in dataset "swiss" (details about dataset here: swiss function - RDocumentation)
 
 ```{r}
-help(swiss)
 
 Data <- swiss
+
 ```
 
 4. Provide the summary statistics for all the variables
@@ -125,9 +105,13 @@ summary(swiss)
 
 ```{r}
 
-max(Data[c("Infant.Mortality")])
+max(Data[c("Agriculture")])
 
-Province = "Porrentruy"
+which.max(Data[,2])
+
+row.names(Data[33,])
+
+Province <- row.names(Data[33,])
 
 
 ```
