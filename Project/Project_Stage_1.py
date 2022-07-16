@@ -33,6 +33,13 @@ os.chdir(git_path)
 
 housing = pd.read_csv("hmda_sw.csv")
 
+Data_subset = housing[["s4","s6","s7","s13", "s15", "s17","s23a","s27a","s33","s40","s42","s45","s46","school"]]
+
+#                   s4           s6               s7          s13    s15         s17                s23a                 s27a             s33             s40                    s42                   s45             S46       school
+Col_names = ["Loan_Purpose", "Loan_Amount", "Action_Taken", "Race", "Sex" , "Income_Thousands", "Marital_Status", "Self_Employed", "Purchase_Price", "Approved_Credit", "Mortgage_Credit_History", "DTI_Housing", "DTI_Total", "school" ] 
+
+Data_subset.columns = [Col_names]
+
 
 # 4. Generate summary statistics on the set of variables selected, and explain 
 # the composition of the sample and of the characteristics of an average 
@@ -40,6 +47,10 @@ housing = pd.read_csv("hmda_sw.csv")
 # histograms and frequency counts on particular variables of interest, which 
 # can be referenced in your explanation of the composition of the sample 
 # and of a representative applicant.
+
+Summary = Data_subset.describe()
+
+
 
 # 5. What is the baseline probability of an individual being approved 
 # for a mortgage?
