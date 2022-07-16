@@ -109,19 +109,26 @@ return(Result)
 3. Bring in dataset "swiss" (details about dataset here: swiss function - RDocumentation)
 
 ```{r}
+help(swiss)
 
+Data <- swiss
 ```
 
 4. Provide the summary statistics for all the variables
 
 ```{r}
-
+summary(swiss)
 ```
 
 
 5. Which province has the highest percent of males involved in agriculture as their occupation 
 
 ```{r}
+
+max(Data[c("Infant.Mortality")])
+
+Province = "Porrentruy"
+
 
 ```
 
@@ -130,6 +137,8 @@ return(Result)
 
 ```{r}
 
+cor(Data)
+
 ```
 
 
@@ -137,12 +146,21 @@ return(Result)
 
 ```{r}
 
+Fertility <- Data$Fertility
+Education <- Data$Education
+
+plot(Education, Fertility)
+
 ```
 
 
 8. Provide a histogram of the % of individuals that were catholic
 
 ```{r}
+
+Percent_of_Catholics <- Data$Catholic
+
+hist(Percent_of_Catholics)
 
 ```
 
