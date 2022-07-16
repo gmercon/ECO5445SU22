@@ -1,0 +1,148 @@
+---
+title: "Assignment05"
+author: "Guillermo"
+date: '2022-07-15'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+Assignment05______________________________________________________________________________
+
+2. Question 2 from assignment02: 
+
+Assign a variable name to each of the following and use Python to identify the data type of each variable:
+2
+2.0
+10j
+2 Cool for School
+True
+
+```{r}
+
+Two <- 2
+class(Two)
+
+TwoPointO <- 2.0
+class(TwoPointO)
+
+TenJ <- "10j"
+class(TenJ)
+
+Phrase <- "2 cool for school"
+class(Phrase)
+
+ThisIs <- "True"
+class(ThisIs)
+ 
+```
+
+
+Question 5 from assignment05
+
+This question was part of an in-person interview where you were expected to write the code on a board: "Design a function in which I can input a value, when I input the value, it returns the 4 possible outputs":
+- If it is a multiple of 3 return the string "foo"
+- If it is a multiple of 5 return the string "bar"
+- If it is a multiple of 15 return the string "foobar"
+- If it does not satisfy any of those, return the string "Not a multiple of 3, 5, or 15"
+
+
+```{r}
+
+FoobarFunction <- function(A){
+# FoobarFunction will inform you if the entered value is a multiple of 3, 5, or 15. 
+# It will display "foo", "bar", and "foobar" respectively.
+# Precondition: This function will not work by typing in strings. 
+# Examples below:
+#>>> FoobarFunction(30)
+# [1] "foobar"
+#>>> FoobarFunction(20)
+# [1] "bar"
+# >>> FoobarFunction(6)
+# [1] "foo"
+#>>> FoobarFunction(17)
+# [1] "Not a multiple of 3, 5, or 15"
+#>>> FoobarFunction(six)
+# Error in FoobarFunction(six) : object 'six' not found
+
+if ((as.integer(B/3)) == B/3) {
+Result <- "foo"
+}
+if ((as.integer(B/5)) == B/5) {
+Result <- "bar"
+}
+
+if  ((as.integer(B/15)) == B/15) {
+Result <- "foobar"
+}
+else 
+Result <- "Not a multiple of 3, 5, or 15"
+return(Result)
+} 
+
+```
+
+
+3. Bring in dataset "swiss" (details about dataset here: swiss function - RDocumentation)
+
+```{r}
+
+```
+
+4. Provide the summary statistics for all the variables
+
+```{r}
+
+```
+
+
+5. Which province has the highest percent of males involved in agriculture as their occupation 
+
+```{r}
+
+```
+
+
+6. Provide the correlation values bewteen all the variables
+
+```{r}
+
+```
+
+
+7. Plot the relationship between fertility and education where fertility is on the y-axis and education is on the x-axis
+
+```{r}
+
+```
+
+
+8. Provide a histogram of the % of individuals that were catholic
+
+```{r}
+
+```
+
