@@ -71,6 +71,9 @@ plt.hist(Data_subset["Race"])
 plt.title("Race")
 
 plt.hist(Data_subset["Action_Taken"])
+plt.title("Actions Taken")
+plt.xlabel("1= Loan Originated, 2= Approved but not accepted, 3= Approved and Accepted")
+
 
 # this scatter plot shows the years of education group on race. The 
 # lower alpha allows us to see when a majority of data spikes in one point
@@ -78,7 +81,7 @@ plt.scatter(Data_subset["School"],Data_subset["Race"], alpha = .20)
 plt.axis([0, 30, 0, 6])
 plt.xlabel("Years of Education")
 plt.ylabel("Race (Black = 3, White = 5")
-plt.title("Years of Education Grouped by Race")
+plt.title("Years of Education: Grouped by Race")
 
 # Similar to above, this scatter plot shows income in thousands grouped by race
 # The darker points indicate a majority of people earning that income amount, 
@@ -87,7 +90,7 @@ plt.scatter(Data_subset["Income_Thousands"], Data_subset["Race"], alpha = .20)
 plt.axis([0, 200, 0, 6])
 plt.xlabel("Income in Thousands")
 plt.ylabel("Race (Black=3, White =5)")
-plt.title("Income in Thousands Grouped by Race")
+plt.title("Income in Thousands: Grouped by Race")
 
 plt.scatter(Data_subset["DTI_Total"], Data_subset["Race"], alpha = .20)
 plt.axis([0, 100, 0, 6])
@@ -95,7 +98,7 @@ plt.xlabel("Debt to Income - Total Expenses/Income")
 plt.ylabel("Race (Black=3, White =5)")
 plt.title("Debt to Income Ratio - TE/I: Grouped by Race")
 
-          
+
 # The composition of the data is skewed to the right. Of course this is due
 # to near infinite values placed on missig data points. If we ignore that we actually 
 # see a normal distribution for things like loan amounts, and debt to income ratios.
@@ -114,11 +117,70 @@ plt.title("Debt to Income Ratio - TE/I: Grouped by Race")
 # 5. What is the baseline probability of an individual being approved 
 # for a mortgage?
 
+Loans = Data_subset["Action_Taken"]
+
+Loans.value_counts()
+
+Loans_Approved = 2025
+Loans_Denied = 285
+Loans_Approved_Not_Accepted = 70
+Total = 2025 + 285 + 70 
+Total_Approved = 2025 + 70
+
+Probability_of_Approval = Total_Approved/Total
+
+print(round(Probability_of_Approval, 2))
+
+Percent_Chance = Probability_of_Approval * 100
+print(round(Percent_Chance))
+
 
 
 # 6. Based on the data you read in, create a table with the following 
 # structure (values will not be the same as the example):
-    
+
+
+Race_Subset = (Data_subset["Race"])
+Actions_Subset = Data_subset["Action_Taken"]
+
+A = Race_Subset.to_numpy()
+B = Actions_Subset.to_numpy()
+
+C = np.concatenate((A, B), axis=1)
+# I have been working on this for a long time and finally go it to work
+# I dont think I needed to concatenate the array into C but it is working now
+# so I am going to leave it here
+
+
+Black_Approved = 0 
+Black_Not_Approved = 0
+White_Approved = 0
+White_Not_Approved = 0
+
+for i in range(len(C)):
+    X = A[i]
+    Y = B[i]
+    if X == 3 and Y == 1:
+        Black_Approved += 1
+    elif X == 3 and Y == 2:
+        Black_Approved += 1
+    elif X == 3 and Y ==  3:
+        Black_Not_Approved += 1
+    elif X == 5 and Y == 1:
+        White_Approved += 1
+    elif X == 5 and Y == 2:
+        White_Approved += 1
+    elif X == 5 and Y ==  3:
+        White_Not_Approved += 1
+
+Total_Black = Black_Approved + Black_Not_Approved
+Total_White = White_Approved + White_Not_Approved
+
+print("The total number of white applicants is",Total_White,". The total number of black applicants is",Total_Black)
+print("Total approved white Applicants is",White_Approved,"Total Approved Black Applicants is",Black_Approved)
+
+
+
 # 7. From the table you create in "6", calculate the following
 # P(Approved/White)
 # P(NotApproved/Black)
