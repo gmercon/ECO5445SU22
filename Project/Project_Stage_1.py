@@ -180,7 +180,10 @@ Total_White = White_Approved + White_Not_Approved
 print("The total number of white applicants is",Total_White,". The total number of black applicants is",Total_Black)
 print("Total approved white Applicants is",White_Approved,". Total Approved Black Applicants is",Black_Approved)
 
-Approval_Table = np.array([["Applicant Race", "Approved","Not Approved","Total"], ["Black", 243, 96, 339], ["White", 1852, 189, 2041]])
+
+Cnames = ["Applicant Race", "Approved","Not Approved","Total"]
+Approval_Values = np.array([["Black", 243, 96, 339], ["White", 1852, 189, 2041]])
+Approval_Table = pd.DataFrame(Approval_Values, columns=Cnames)
 print(Approval_Table)
 
 # 7. From the table you create in "6", calculate the following
