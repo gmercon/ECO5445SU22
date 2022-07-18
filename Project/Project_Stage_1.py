@@ -177,10 +177,33 @@ Total_Black = Black_Approved + Black_Not_Approved
 Total_White = White_Approved + White_Not_Approved
 
 print("The total number of white applicants is",Total_White,". The total number of black applicants is",Total_Black)
-print("Total approved white Applicants is",White_Approved,"Total Approved Black Applicants is",Black_Approved)
+print("Total approved white Applicants is",White_Approved,". Total Approved Black Applicants is",Black_Approved)
 
-
+Approval_Table = np.array([["Applicant Race", "Approved","Not Approved","Total"], ["Black", 243, 96, 339], ["White", 1852, 189, 2041]])
+print(Approval_Table)
 
 # 7. From the table you create in "6", calculate the following
 # P(Approved/White)
 # P(NotApproved/Black)
+
+P_White_and_Approved = White_Approved/2380
+print(round(P_White_and_Approved, 2))
+
+# Probability of being white and approved is around 78%
+
+P_Black_and_Not_Approved = Black_Not_Approved/2380
+print(round(P_Black_and_Not_Approved, 2))
+
+# Probability of being black and not approved is around 4%
+
+
+
+# Not sure if you actually wanted these values
+P_AW = White_Approved/Total_Approved
+print(P_AW)
+# Here we see there is an 88% chance that a white applicant will be approved over 
+# a black applicant
+
+P_NAB = Black_Not_Approved/(2380 - Total_Approved)
+print(P_NAB)
+# Here we that black candidates have a 33% chance of being not approved. 
