@@ -133,11 +133,12 @@ print(round(Probability_of_Approval, 2))
 
 Percent_Chance = Probability_of_Approval * 100
 print(round(Percent_Chance))
-
+# From above we see that the probability of an individual being approved for a mortgage
+# is around 88%
 
 
 # 6. Based on the data you read in, create a table with the following 
-# structure (values will not be the same as the example):
+# structure (values will not be the same as the example): 
 
 
 Race_Subset = (Data_subset["Race"])
@@ -201,9 +202,9 @@ print(round(P_Black_and_Not_Approved, 2))
 # Not sure if you actually wanted these values
 P_AW = White_Approved/Total_Approved
 print(P_AW)
-# Here we see there is an 88% chance that a white applicant will be approved over 
-# a black applicant
+# Here we see there is an 88% chance an approved applicant is white 
 
-P_NAB = Black_Not_Approved/(2380 - Total_Approved)
+P_NAB = Black_Not_Approved/(Loans_Denied)
 print(P_NAB)
-# Here we that black candidates have a 33% chance of being not approved. 
+# Here we see that there is a 33% chance not approved candidates will be black
+
