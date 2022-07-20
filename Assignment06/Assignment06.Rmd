@@ -15,6 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r packages}
 # Add any packages you want in this chunk:
+
+library(readr)
+
 ```
 
 We are going to look at the property prices for Orange County. From there we are going to try and predict the sales price by linear regression.
@@ -25,6 +28,9 @@ Bring in the data and make sure the data types are correct. If not, make the pro
 
 ```{r}
 
+prop_prices_reduced <- read_csv("~/GitHub/ECO5445SU22/Assignment06/data/prop_prices_reduced.csv")
+View(prop_prices_reduced)
+
 ```
 
 
@@ -34,6 +40,19 @@ Plot histograms for all variables. Additionally, add scatterplots for the relati
 
 ```{r}
 
+hist(prop_prices_reduced$sale_def, main = "Histogram of Sales Deflated")
+hist(prop_prices_reduced$bed, main = "Histogram of # of Beds")
+hist(prop_prices_reduced$bath, main = "Histogram of Baths")
+hist(prop_prices_reduced$area_heated, main = "Histogram of Area Heated")
+hist(prop_prices_reduced$area, main = "Histogram of Area")
+hist(prop_prices_reduced$dist_cbd, main = "Histogram of Distance to CBD")
+hist(prop_prices_reduced$dist_lakes, main = "Histogram of Distance to Lakes")
+hist(prop_prices_reduced$pool, main = "Histogram of Houses with Pools")
+
+
+plot(prop_prices_reduced$sale_def,prop_prices_reduced$bed)
+abline(lm(prop_prices_reduced$sale_def ~ prop_prices_reduced$bed))
+
 ```
 
 # Summary Statistics
@@ -42,6 +61,10 @@ Provide basic summary statistics for univariate analysis. Also, provide the corr
 
 ```{r}
 
+summary(prop_prices_reduced)
+
+cor(prop_prices_reduced)
+
 ```
 
 # Regression Analysis
@@ -49,6 +72,9 @@ Provide basic summary statistics for univariate analysis. Also, provide the corr
 Run a regression with all the variables included. Print results of the regression.
 
 ```{r}
+
+
+
 
 ```
 
