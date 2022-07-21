@@ -1,0 +1,114 @@
+---
+title: "Assignment 6"
+author: "Guillermo Mercon"
+date: '2022-07-24'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages}
+# Add any packages you want in this chunk:
+
+library(readr)
+
+```
+
+We are going to look at the property prices for Orange County. From there we are going to try and predict the sales price by linear regression.
+
+# Importing Data 
+
+Bring in the data and make sure the data types are correct. If not, make the proper changes. The file is located within this project. *data/prop_prices_reduced.csv*
+
+```{r}
+
+prop_prices_reduced <- read_csv("~/GitHub/ECO5445SU22/Assignment06/data/prop_prices_reduced.csv")
+View(prop_prices_reduced)
+
+```
+
+
+# Plotting
+
+Plot histograms for all variables. Additionally, add scatterplots for the relationships between all quantitative variables.
+
+```{r}
+
+hist(prop_prices_reduced$sale_def, main = "Histogram of Sales Deflated")
+hist(prop_prices_reduced$bed, main = "Histogram of # of Beds")
+hist(prop_prices_reduced$bath, main = "Histogram of Baths")
+hist(prop_prices_reduced$area_heated, main = "Histogram of Area Heated")
+hist(prop_prices_reduced$area, main = "Histogram of Area")
+hist(prop_prices_reduced$dist_cbd, main = "Histogram of Distance to CBD")
+hist(prop_prices_reduced$dist_lakes, main = "Histogram of Distance to Lakes")
+hist(prop_prices_reduced$pool, main = "Histogram of Houses with Pools")
+
+
+plot(prop_prices_reduced$sale_def,prop_prices_reduced$bed)
+abline(lm(prop_prices_reduced$sale_def ~ prop_prices_reduced$bed))
+
+```
+
+# Summary Statistics
+
+Provide basic summary statistics for univariate analysis. Also, provide the correlation between all the quantitative variables.
+
+```{r}
+
+summary(prop_prices_reduced)
+
+cor(prop_prices_reduced)
+
+```
+
+# Regression Analysis
+
+Run a regression with all the variables included. Print results of the regression.
+
+```{r}
+
+
+
+
+```
+
+Which of the variables tested significant at the 95% level? Looking at the results and answering outside of the chunk is sufficient.
+
+## Evaluating the model
+
+As is, are any of the Gauss-Markov assumptions violated? If so, which ones? How can you fix the issues?
+
+```{r}
+
+```
+
+## New Model
+
+Based off of your findings in the previous section, make changes to the variables, the functional form, etc.
+
+```{r}
+
+```
+
+
+# Prediction
+
+Based on the following inputs, predict the deflated sales price:
+
+- 2 bed
+- 2 bath
+- area_heated = 1223
+- area = 9750
+- dist_cbd = 19368
+- dist_lakes = 490
+- no pool
+
+```{r}
+
+```
