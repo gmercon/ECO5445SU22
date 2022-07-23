@@ -1,0 +1,2 @@
+"0","plot(dose, drugA, type = ""b"", lty = 3, lwd = 3, pch = 15,"
+"0","     cex = 2)"

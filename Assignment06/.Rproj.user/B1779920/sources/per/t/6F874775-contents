@@ -50,8 +50,20 @@ hist(prop_prices_reduced$dist_lakes, main = "Histogram of Distance to Lakes")
 hist(prop_prices_reduced$pool, main = "Histogram of Houses with Pools")
 
 
-plot(prop_prices_reduced$sale_def,prop_prices_reduced$bed)
-abline(lm(prop_prices_reduced$sale_def ~ prop_prices_reduced$bed))
+plot(prop_prices_reduced, main = "Scatterplot of All Relationships")
+plot(prop_prices_reduced$bed,prop_prices_reduced$sale_def, main = "Sale Price by # of Beds")
+plot(prop_prices_reduced$bath,prop_prices_reduced$sale_def, main = "Sale Price by # of Bathrooms")
+plot(prop_prices_reduced$area,prop_prices_reduced$sale_def, main = "Sale Price by Area")
+plot(prop_prices_reduced$area_heated,prop_prices_reduced$sale_def, main = "Sale Price by Area Heated")
+plot(prop_prices_reduced$dist_cbd,prop_prices_reduced$sale_def, main = "Sale Price by Distance to CBD")
+plot(prop_prices_reduced$dist_lakes,prop_prices_reduced$sale_def, main = "Sale Price by Distance to Lake")
+plot(prop_prices_reduced$pool,prop_prices_reduced$sale_def, main = "Sale Price by Pool")
+plot(prop_prices_reduced$area,prop_prices_reduced$area_heated, main = "Area Heated by Total Area")
+
+
+
+
+
 
 ```
 
@@ -73,18 +85,25 @@ Run a regression with all the variables included. Print results of the regressio
 
 ```{r}
 
+scatterplotMatrix(prop_prices_reduced, spread = FALSE, lty.smooth = 2, main = "Scatterplot Matrix")
 
+fit <-lm(sale_def ~ bed + bath + area_heated + area + dist_cbd + dist_lakes + pool, data = prop_prices_reduced)
 
+summary(fit)
 
 ```
 
 Which of the variables tested significant at the 95% level? Looking at the results and answering outside of the chunk is sufficient.
+
+Answer: The variables that tested significant at the 95% level include bed, bath, area heated, and distance to cbd and pool. This leaves distance to lakes out as insignificant. Another thing to note is that pool tested significant at 95% while the rest of the variables tested significant at up to 99.99% 
 
 ## Evaluating the model
 
 As is, are any of the Gauss-Markov assumptions violated? If so, which ones? How can you fix the issues?
 
 ```{r}
+
+
 
 ```
 

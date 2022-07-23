@@ -1,0 +1,781 @@
+---
+title: "ECO 5445: Introduction to R"
+author: "Joshua L. Eubanks (joshua.eubanks@ucf.edu)"
+date: '2022-07-13'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# Chapter 1 - R in Action
+
+## Basic commands
+
+R can be used as a basic calculator
+```{r}
+5 + 2
+```
+
+
+There will be times that you wish to store certain calulations for future use. To store this calculation you would need to assign it to an object.
+
+```{r}
+LuckyNumber <- 5 + 2
+```
+
+You may want to call that object later:
+```{r}
+UnluckyNumber <- LuckyNumber + 6
+
+UnluckyNumber
+```
+
+## Listing 1.1 - A Sample R session
+
+Before we read in some data from a file, define some vectors of variables using the `c()` function. This function concatenates variables into a vector.
+
+```{r}
+age <- c(1, 3, 5, 2, 11, 9, 3, 9, 12, 3)
+weight <- c(4.4, 5.3, 7.2, 5.2, 8.5, 7.3, 6, 10.4,
+    10.2, 6.1)
+```
+
+You can end a command on the next line as long as the line terminates with an operator that indicates an unfinished command.
+
+Let's calculate some statistics with these variables.
+
+Calculate the mean:
+```{r}
+mean(weight)
+```
+
+One thing to note is that observations that are NA will not be counted as zero, it will cause issues:
+```{r}
+v1 <- c(1,1,3,3,3,3.22225,4,5, NA)
+mean(v1)
+```
+
+You can fix this by dropping NAs:
+
+```{r}
+mean(v1, na.rm = TRUE)
+```
+
+You can also embed the results into the text. Ex: The mean weight is `r mean(weight)`
+
+Calculate the standard deviation:
+
+```{r}
+# Notice standard deviation is sd in R and std in python
+sd(weight)
+```
+
+Calculate the correlation between two variables:
+```{r}
+cor(age, weight)
+```
+
+R comes standard with several tools for statistical analysis as well as graphics.
+```{r}
+plot(age, weight)
+```
+
+The default version is a very simple black-and-white scattergraph but we will learn how to use R for richer data visualization.
+
+
+## Listing 1.2 - An example of commands used to manage the R Workspace.
+
+If you have opened up the project file (`.Rproj`), your relative path will already be at the proper location.
+
+If you are not at the proper location, change the next line to assign wd_path a valid directory on your computer.
+
+```{r}
+
+wd_path <- '' # You can use tab to help find what files are available in your current location
+
+#setwd(wd_path)
+```
+
+Another way to find and set your path is on the file tab in the fourth quadrant, files tab.
+
+We can use the `runif()` function to generate uniformly distributed random variables.
+
+```{r}
+x <- runif(20)
+```
+
+The `summary()` command is the basic function for investigating new data.
+
+```{r}
+summary(x)
+```
+
+The `hist()` function plots a histogram.
+
+
+```{r}
+hist(x)
+```
+
+You can save the history of your commands in a session with `savehistory()` and also save the state of your session, including all the values of variables in memory, with `save.image()`
+
+Although useful, this is not recommended because the state of your workspace can always be recreated with your data and your script. You should develop the habit of writing code in a script so that it preserves your analysis.
+
+## Listing 1.3 - Working with a new package
+
+So far, we have seen several built-in functions. The full functionality of R is achieved by installing packages of functions developed by other users in the R community.
+
+The package vcd is used to Visualizing Categorical Data. Install packages with the `install.packages()` function:
+
+```{r}
+#install.packages("vcd")
+```
+
+The package needs only be installed once, unless you want to update the version. Once installed, you need to attach the package with the `library()` function.
+
+```{r}
+library(vcd)
+```
+
+Now, all the functions in the vcd library are available to use in your workspace.
+
+
+You can obtain a description of the functions available in a package.
+
+```{r}
+help(package = "vcd")
+```
+
+Many packages contain sample datasets to use as examples of the functionality. Also, if you are having issues, you can use these as examples in your StackExchange questions
+
+```{r}
+# help(Arthritis)
+```
+
+Display the dataset (since it is small)
+
+```{r}
+Arthritis
+```
+
+Find the examples corresponding to the datasets with `example()`
+
+
+```{r}
+example(Arthritis)
+```
+
+You can copy the text for a command that uses this dataset
+
+```{r}
+art <- xtabs(~ Treatment + Improved, data = Arthritis, subset = Sex == "Female")
+```
+
+
+
+## Getting Help
+
+We saw the help function used above. It can be used in many ways. You can find many resources to get you started with help.
+
+```{r}
+#help.start()
+```
+
+If you know the name of a function, such as `lm`, you can type either
+
+```{r}
+# ?lm
+# or
+# help(lm)
+```
+
+
+You can also type keywords in the help window in RStudio.
+
+
+# Chapter 2 - R in Action
+
+Using the `c()` function, you can create vectors with many types of variables.
+
+```{r}
+a <- c(1, 2, 5, 3, 6, -2, 4)
+b <- c("one", "two", "three")
+c <- c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)
+```
+
+Once a vector exists in memory, you can recall any of the elements by using vector subscripts
+
+By the index number:
+
+```{r}
+a[3]
+```
+
+With a vector of index numbers:
+
+```{r}
+a[c(1, 3, 5)]
+```
+
+By a sequence of consecutive index numbers
+
+```{r}
+a[2:6]
+```
+
+It can often be difficult to remember the element number you are looking for. For some data types, such as matrices and arrays, R allows you to name each row and column to reference the elements.
+
+
+## Listing 2.1 - Creating Matrices
+
+Create a matrix with the `matrix()` function.
+
+```{r}
+y <- matrix(1:20, nrow = 5, ncol = 4)
+y
+```
+
+You can populate the values and name them in one step.
+
+```{r}
+cells <- c(1, 26, 24, 68)
+rnames <- c("R1", "R2")
+cnames <- c("C1", "C2")
+mymatrix <- matrix(cells, nrow = 2, ncol = 2, byrow = TRUE,
+                   dimnames = list(rnames, cnames))
+mymatrix
+```
+
+Now you can call the values by name.
+
+```{r}
+mymatrix['R2', 'C2']
+```
+
+It may be more convenient to enter the values by cycling through columns one row at a time.
+
+```{r}
+mymatrix <- matrix(cells, nrow = 2, ncol = 2, byrow = FALSE,
+                   dimnames = list(rnames, cnames))
+mymatrix
+
+```
+
+
+
+## Listing 2.2 - Using matrix subscripts
+
+Let's define another matrix so that we can easily see the pattern.
+
+```{r}
+x <- matrix(1:10, nrow = 2)
+
+x
+```
+
+Matrices are two-dimensional objects, so you reference an element with two indices or names in square brackets.Leaving an index blank selects all values in that dimension.
+
+```{r}
+x[2, ]
+x[, 2]
+x[1, 4]
+x[1, c(4, 5)]
+```
+
+## Listing 2.3 - Creating an array
+
+You need not stop in two dimensions. As in Python, you can store data in higher-dimensional arrays.
+
+```{r}
+dim1 <- c("A1", "A2")
+dim2 <- c("B1", "B2", "B3")
+dim3 <- c("C1", "C2", "C3", "C4")
+z <- array(1:24, c(2, 3, 4), dimnames = list(dim1,
+                                             dim2, dim3))
+z
+```
+
+
+The notation is similar to that for matrices.
+
+
+## Listing 2.4 - Creating a dataframe
+
+For statistical analysis, the most useful data type is a data frame, which can hold several types of data together.
+
+```{r}
+patientID <- c(1, 2, 3, 4)
+age <- c(25, 34, 28, 52)
+diabetes <- c("Type1", "Type2", "Type1", "Type1")
+status <- c("Poor", "Improved", "Excellent", "Poor")
+patientdata <- data.frame(patientID, age, diabetes,
+                          status)
+patientdata
+
+```
+
+A data frame contains data organized into columns with each column holding a variable of the same type.
+
+
+## Listing 2.5 - Specifying elements of a dataframe
+
+As with matrices, you can reference elements by name or by number.
+
+```{r}
+patientdata[1:2]
+patientdata[c("diabetes", "status")]
+patientdata$age
+
+```
+
+
+## Listing 2.6 - Using factors
+
+The data type "factor" is used to store categorical data, which often arises in statistical analysis.
+
+```{r}
+patientID <- c(1, 2, 3, 4)
+age <- c(25, 34, 28, 52)
+diabetes <- c("Type1", "Type2", "Type1", "Type1")
+status <- c("Poor", "Improved", "Excellent", "Poor")
+diabetes <- factor(diabetes)
+status <- factor(status, order = TRUE)
+patientdata <- data.frame(patientID, age, diabetes,
+                          status)
+
+```
+
+Inspect the contents of this data frame.
+
+```{r}
+str(patientdata)
+summary(patientdata)
+
+```
+
+##  Listing 2.7 - Creating a list
+
+A list is a special type of object that can store multiple kinds of data in an unstructured way.
+
+```{r}
+g <- "My First List"
+h <- c(25, 26, 18, 39)
+j <- matrix(1:10, nrow = 5)
+k <- c("one", "two", "three")
+mylist <- list(title = g, ages = h, j, k)
+mylist
+
+```
+
+You can inspect the contents with commands similar to those for matrices and data frames.
+
+```{r}
+mylist$title
+mylist$ages
+mylist[4]
+```
+
+Notice that the last two elements are unnamed but are still referenced by number.
+
+
+
+Additional material can be found in the `swirl` package.
+
+
+# Chapter 3 - R in Action
+
+We will need the the `Hmisc` package to be installed by running the command `install.packages('Hmisc')`
+
+
+The variable `par` stores parameter for displaying graphics.
+
+One parameter specifies a pause after each graph
+
+```{r}
+par(ask = TRUE)
+```
+
+
+
+
+## Plotting and appending features
+
+Attach a dataset from a library with examples of data about cars.
+
+```{r}
+attach(mtcars)
+```
+
+Now plot the weight and miles per gallon.
+
+```{r}
+plot(wt, mpg)
+abline(lm(mpg ~ wt))
+title("Regression of MPG on Weight")
+```
+
+Using the `lm()` function, you can estimate a linear model, i.e. a linear regression model. Placing the call to `lm()` in `abline` appends the estimated regression line through the observations.
+
+Notice that `abline()` appended a line to the existing plot, after the plot object was created by `plot()`.
+
+You can add other features to an open plot, including titles and legends.
+
+When you no longer need the data, you can detach the dataset.
+
+```{r}
+detach(mtcars)
+```
+
+
+## Specifying types of plot points
+
+Create some data and plot them.
+
+```{r}
+dose <- c(20, 30, 40, 45, 60)
+drugA <- c(16, 20, 27, 40, 60)
+drugB <- c(15, 18, 25, 31, 40)
+plot(dose, drugA, type = "b")
+```
+
+You can specify the type of plot as points ('p', the default), line ('l') or both ('b').
+
+
+## Changing linetypes, point types, and colors
+
+
+You can also specify parameters for the type of line (lty) and the symbol used for the points.
+
+```{r}
+plot(dose, drugA, type = "b", lty = 2, pch = 17)
+```
+
+The lwd argument changes the line width and the cex argument changes the size of the points.
+
+```{r}
+plot(dose, drugA, type = "b", lty = 3, lwd = 3, pch = 15,
+     cex = 2)
+```
+
+To plot several series, you can use a sequence of colors specified by the `rainbow()` function.
+
+```{r}
+n <- 10
+mycolors <- rainbow(n)
+pie(rep(1, n), labels = mycolors, col = mycolors)
+
+```
+
+For documents in black and white, use the grey scale.
+
+```{r}
+mygrays <- gray(0:n/n)
+pie(rep(1, n), labels = mygrays, col = mygrays)
+```
+
+
+
+
+## Using graphical parameters to control graph appearance
+
+You can also set global graphical parameters with the par() function.
+
+Create some data.
+
+```{r}
+dose <- c(20, 30, 40, 45, 60)
+drugA <- c(16, 20, 27, 40, 60)
+drugB <- c(15, 18, 25, 31, 40)
+```
+
+First, store the existing parameter settings.
+
+```{r}
+opar <- par(no.readonly = TRUE)
+```
+
+We will reinstate them later. Customize the settings.
+
+```{r}
+par(pin = c(2, 3))
+par(lwd = 2, cex = 1.5)
+par(cex.axis = 0.75, font.axis = 3)
+```
+
+Now these settings are the defaults for the next plots.
+
+```{r}
+plot(dose, drugA, type = "b", pch = 19, lty = 2, col = "red")
+```
+
+If you get an error or warning message, try resizing the "Plot" window in the bottom right by dragging the edges of the window.
+
+```{r}
+plot(dose, drugB, type = "b", pch = 23, lty = 6, col = "blue",
+    bg = "green")
+```
+
+Revert back to the default parameter settings we had earlier.
+
+```{r}
+par(opar)
+```
+
+
+## Cutomizing Axes
+
+You can add labels on the axes, a title and set the ranges in the x and y directions.
+
+```{r}
+plot(dose, drugA, type = "b", col = "red", lty = 2,
+    pch = 2, lwd = 2, main = "Clinical Trials for Drug A",
+    sub = "This is hypothetical data",
+    xlab = "Dosage", ylab = "Drug Response", xlim = c(0, 60),
+    ylim = c(0, 70))
+```
+
+Create an example with multiple relationships to plot together.
+
+```{r}
+x <- c(1:10)
+y <- x
+z <- 10/x
+```
+
+As above, store and change the parameter settings.
+
+```{r}
+opar <- par(no.readonly = TRUE)
+par(mar = c(5, 4, 4, 8) + 0.1)
+```
+
+
+Now create an example with multiple plots and customized axis labels.
+
+```{r}
+plot(x, y, type = "b", pch = 21, col = "red", yaxt = "n",
+    lty = 3, ann = FALSE)
+lines(x, z, type = "b", pch = 22, col = "blue", lty = 2)
+axis(2, at = x, labels = x, col.axis = "red", las = 2)
+axis(4, at = z, labels = round(z, digits = 2), col.axis = "blue",
+    las = 2, cex.axis = 0.7, tck = -0.01)
+mtext("y=1/x", side = 4, line = 3, cex.lab = 1, las = 2,
+    col = "blue")
+title("An Example of Creative Axes", xlab = "X values",
+    ylab = "Y=X")
+
+```
+
+It helps to run the above commands one at a time to see what each command adds to the plot.
+
+Reset the graphical parameters.
+
+```{r}
+par(opar)
+```
+
+
+
+
+
+## Comparing Drug A and Drug B response by dose
+
+Reconsider our clinical data.
+
+```{r}
+dose <- c(20, 30, 40, 45, 60)
+drugA <- c(16, 20, 27, 40, 60)
+drugB <- c(15, 18, 25, 31, 40)
+```
+
+Store and set the graphical parameters.
+
+```{r}
+opar <- par(no.readonly = TRUE)
+par(lwd = 2, cex = 1.5, font.lab = 2)
+```
+
+Now plot the effectiveness of the two drugs and add a line to show a threshold with a dotted line.
+
+```{r}
+plot(dose, drugA, type = "b", pch = 15, lty = 1, col = "red",
+    ylim = c(0, 60), main = "Drug A vs. Drug B", xlab = "Drug Dosage",
+    ylab = "Drug Response")
+lines(dose, drugB, type = "b", pch = 17, lty = 2,
+    col = "blue")
+abline(h = c(30), lwd = 1.5, lty = 2, col = "grey")
+```
+
+Again, you might need to resize the "Plot" window. Click the "Zoom" button to display the plot in a separate window.
+
+Now reset the default graphical parameters.
+
+```{r}
+par(opar)
+```
+
+
+
+
+
+## Labelling Points
+
+You can also label points with text.
+```{r}
+attach(mtcars)
+plot(wt, mpg, main = "Milage vs. Car Weight", xlab = "Weight",
+    ylab = "Mileage", pch = 18, col = "blue")
+text(wt, mpg, row.names(mtcars), cex = 0.6, pos = 4,
+    col = "red")
+detach(mtcars)
+```
+
+It is a good habit to remove datsets with `detach()` after you are finished with them.
+
+You can add the text in a variety of font families
+
+```{r}
+opar <- par(no.readonly = TRUE)
+par(cex = 1.5)
+plot(1:7, 1:7, type = "n")
+text(3, 3, "Example of default text")
+text(4, 4, family = "mono", "Example of mono-spaced text")
+text(5, 5, family = "serif", "Example of serif text")
+par(opar)
+```
+
+
+
+## Multiple Plots
+
+So far, we have considered one plot at a time, you can place multiple plots in rows or columns.
+
+
+```{r}
+attach(mtcars)
+opar <- par(no.readonly = TRUE)
+```
+
+
+```{r}
+
+par(mfrow = c(2, 2))
+plot(wt, mpg, main = "Scatterplot of wt vs. mpg")
+plot(wt, disp, main = "Scatterplot of wt vs disp")
+hist(wt, main = "Histogram of wt")
+boxplot(wt, main = "Boxplot of wt")
+
+
+```
+
+Reset the parameters.
+
+```{r}
+par(opar)
+detach(mtcars)
+
+```
+
+
+
+
+You can choose different dimensions for the pattern of the plots. This example plots three histograms arranged along rows in a single column.
+
+```{r}
+attach(mtcars)
+opar <- par(no.readonly = TRUE)
+
+```
+
+```{r}
+
+par(mfrow = c(3, 1))
+hist(wt)
+hist(mpg)
+hist(disp)
+
+```
+
+```{r}
+par(opar)
+detach(mtcars)
+```
+
+The plots do not always have to be the same size. The `layout()` command maps the first plot to the first two spaces in the first row of plots.
+
+```{r}
+attach(mtcars)
+
+layout(matrix(c(1, 1, 2, 3), 2, 2, byrow = TRUE))
+hist(wt)
+hist(mpg)
+hist(disp)
+
+detach(mtcars)
+```
+
+The relative sizes of plots can be specified separately.
+
+```{r}
+attach(mtcars)
+
+layout(matrix(c(1, 1, 2, 3), 2, 2, byrow = TRUE),
+    widths = c(3, 1), heights = c(1, 2))
+hist(wt)
+hist(mpg)
+hist(disp)
+
+
+detach(mtcars)
+
+```
+
+Fine placement of figures in a graph
+
+```{r}
+opar <- par(no.readonly = TRUE)
+
+par(fig = c(0, 0.8, 0, 0.8))
+plot(mtcars$wt, mtcars$mpg, xlab = "Miles Per Gallon",
+    ylab = "Car Weight")
+par(fig = c(0, 0.8, 0.55, 1), new = TRUE)
+boxplot(mtcars$wt, horizontal = TRUE, axes = FALSE)
+par(fig = c(0.65, 1, 0, 0.8), new = TRUE)
+boxplot(mtcars$mpg, axes = FALSE)
+mtext("Enhanced Scatterplot", side = 3, outer = TRUE,
+    line = -3)
+
+par(opar)
+
+```
+
+That's a lot of graphs to get you StaRted with graphs in R. There are many other plotting libraries besides the base library.
+
+
+

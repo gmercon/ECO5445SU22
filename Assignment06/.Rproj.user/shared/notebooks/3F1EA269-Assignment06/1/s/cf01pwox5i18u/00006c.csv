@@ -1,0 +1,1 @@
+"0","plot(prop_prices_reduced$dist_lakes,prop_prices_reduced$sale_def, main = ""Sale Price by Distance to Lake"")"

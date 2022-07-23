@@ -1,0 +1,198 @@
+---
+title: "Orange Juice Regression"
+author: "Joshua L. Eubanks (joshua.eubanks@ucf.edu)"
+date: '2022-07-17'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages}
+library(plotly)
+
+```
+
+The following data is from a Chicago-area chain called Dominick's. This data was collected in the 1990s and the data include weekly prices and sales (in number of cartons "moved") for 3 orange juice brands --- Tropicana, Minute Maid, Dominick's --- at 83 Chicagoland Stores, as well as an indicator, `feat`, showing whether each brand was advertized (in store or flyer) that week.
+
+You'll need the following packages installed: `install.packages(c("plotly"))`
+
+# Reading in the Data
+
+```{r}
+oj <- read.csv("oj.csv") 
+```
+
+Checking contents:
+
+```{r}
+head(oj)
+oj$brand <- factor(oj$brand)
+```
+
+# Visualizing Data
+
+
+
+
+```{r}
+plot_ly(oj, y = ~price, x = ~sales, type = 'scatter',color = ~brand)
+
+plot_ly(y = oj$price,x= oj$brand, type = 'box', name = 'Height [cm]')
+
+```
+
+From this we can see that it might be better to log transform the price and the sales:
+
+```{r}
+oj$logPrice <- log(oj$price)
+oj$logmove <- log(oj$sales)
+```
+
+Review plots with log scale
+
+```{r}
+plot_ly(oj, y = ~logPrice, x = ~logmove, type = 'scatter',color = ~brand)
+
+plot_ly(y = oj$logPrice,x= oj$brand, type = 'box', name = 'Height [cm]')
+```
+
+Base plotting:
+
+```{r}
+brandcol <- c("green","red","gold")
+par(mfrow=c(1,2))
+plot(log(price) ~ brand, data=oj, col=brandcol)
+plot(log(sales) ~ log(price), data=oj, col=brandcol[oj$brand])
+```
+
+# Simple Regression
+
+```{r}
+reg = glm(log(sales) ~ log(price) + brand, data=oj)
+
+summary(reg) ## coef, tests, fit
+coef(reg) ## just coefficients
+
+```
+
+Let's check out what it is doing.
+
+```{r}
+x <- model.matrix( ~ log(price) + brand, data=oj)
+x[c(100,200,300),]
+oj[c(100,200,300),]
+```
+
+It is expanded the brands as dummy variables. Dominick's is the default, it is when Minute maid and tropicana dummies are equal to zero.
+
+```{r}
+beta <- coef(reg)
+
+brandcol <- c("green","red","gold")
+
+plot(log(sales) ~ log(price), data=oj, col=brandcol[oj$brand], 
+	cex=.1, pch=20, bty="n")
+abline(a=beta[1], b=beta[2], col=brandcol[1], lwd=2)
+abline(a=beta[1]+beta[3], b=beta[2], col=brandcol[2], lwd=2)
+abline(a=beta[1]+beta[4], b=beta[2], col=brandcol[3], lwd=2)
+legend("bottomleft", bty="n", lwd=2, col=brandcol, legend=levels(oj$brand))
+```
+
+## Interactions
+
+Perhaps instead, there is a brand specific elasticity for each. We will need to use the interaction terms
+
+```{r}
+reg_interact = glm(log(sales) ~ log(price)*brand, data=oj)
+coef(reg_interact)
+```
+
+We can see that the brand elasticities are different than -3.1
+
+```{r}
+beta <- coef(reg_interact)
+
+plot(log(sales) ~ log(price), data=oj, col=brandcol[oj$brand], 
+	cex=.1, pch=20, bty="n")
+abline(a=beta[1], b=beta[2], col=brandcol[1], lwd=2)
+abline(a=beta[1]+beta[3], b=beta[2]+beta[5], col=brandcol[2], lwd=2)
+abline(a=beta[1]+beta[4], b=beta[2]+beta[6], col=brandcol[3], lwd=2)
+legend("bottomleft", bty="n", lwd=2, col=brandcol, legend=levels(oj$brand))
+```
+
+## 3-way interactions
+
+```{r}
+ojreg <- glm(log(sales) ~ log(price)*brand*feat, data=oj)
+coef(ojreg)
+
+```
+
+## Elasticities table
+
+```{r}
+b <- coef(ojreg)
+
+Ad <- c("Not Featured","Featured")
+Dominicks <- c(b["log(price)"],
+               b["log(price)"] + b["log(price):feat"])
+MinuteMaid <- c(b["log(price)"] + b["log(price):brandminute.maid"],
+                b["log(price)"] + b["log(price):brandminute.maid"] + b["log(price):feat"] + b["log(price):brandminute.maid:feat"]
+                )
+Tropicana <- c(b["log(price)"] + b["log(price):brandtropicana"],
+               b["log(price)"] + b["log(price):brandtropicana"] + b["log(price):feat"] + b["log(price):brandtropicana:feat"])
+
+
+data.frame("Advertising" = Ad,
+           "Dominicks" = round(Dominicks,digits = 1),
+           "MinuteMaid" = round(MinuteMaid,digits = 1),
+           "Tropicana" = round(Tropicana,digits = 1))
+
+
+
+```
+
+
+## Table explaining why ads confounded our brand elasticity estimates
+
+```{r}
+salestable <- tapply(exp(oj$logmove), oj[,c("feat","brand")], sum)
+mosaicplot(salestable,col=brandcol)
+```
+
+Minute maid was featured more often than Tropicana. Since being featured leads to more price sensitivity, it lead to Minute maid appearing more price sensitive.
+
+## Fit plots and $R^{2}$ 
+
+```{r}
+
+## (the 'bty="n"' option removes boxes around your plot)
+
+plot(ojreg$fitted ~ oj$logmove, col=brandcol[oj$brand], bty="n")
+abline(a=0,b=1)#  add a line with slope 1, intercept 0
+legend("topleft",legend=levels(oj$brand),fill=brandcol, bty="n")
+
+cor(ojreg$fitted,oj$logmove)^2
+
+
+```
+
+
+## Prediction
+
+Create some data for prediction, using the data.frame function. Note the care in specifying brand factor (levels must match original data). We don't need all variables in oj; just those used as covariates in regression.
+
+```{r}
+newdata <- data.frame(price=rep(4,3),
+                brand=factor(c("tropicana","minute.maid","dominicks"),
+                             levels=levels(oj$brand)))
+
+predict(reg, newdata=newdata)  ## predicted log units moved
+exp(predict(reg, newdata=newdata)) ## predicted # of units moved
+```
