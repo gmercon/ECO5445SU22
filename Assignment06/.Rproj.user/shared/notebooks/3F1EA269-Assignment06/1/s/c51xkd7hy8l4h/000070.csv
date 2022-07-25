@@ -1,1 +1,0 @@
-"0","plot(prop_prices_reduced$area_heated,prop_prices_reduced$sale_def, main = ""Sale Price by Area Heated"")"

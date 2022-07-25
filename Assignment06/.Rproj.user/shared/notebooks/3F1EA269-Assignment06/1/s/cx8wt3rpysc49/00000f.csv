@@ -1,0 +1,63 @@
+"0","# Add any packages you want in this chunk:"
+"0",""
+"0","install.packages(c('car', 'gvlma', 'MASS', 'leaps'))"
+"2","WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/car_3.1-0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1674820 bytes (1.6 MB)
+"
+"2","downloaded 1.6 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/gvlma_1.0.0.3.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 83580 bytes (81 KB)
+"
+"2","downloaded 81 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/MASS_7.3-58.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1172391 bytes (1.1 MB)
+"
+"2","downloaded 1.1 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/leaps_3.1.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 86639 bytes (84 KB)
+"
+"2","downloaded 84 KB
+
+"
+"1","package ‘car’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘gvlma’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘MASS’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘leaps’ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1",""
+"1","The downloaded binary packages are in
+	C:\Users\Guillermo\AppData\Local\Temp\Rtmpgtadsx\downloaded_packages"
+"1",""
+"1","
+"
+"0","library(readr)"
+"0","library(car)"
+"2","Loading required package: carData
+"
+"0","library(gvlma)"
+"0","library(MASS)"
+"0","library(leaps)"
+"0",""

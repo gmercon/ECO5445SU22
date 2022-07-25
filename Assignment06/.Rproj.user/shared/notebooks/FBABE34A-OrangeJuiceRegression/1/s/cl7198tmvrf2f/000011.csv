@@ -1,0 +1,1 @@
+"0","plot(log(sales) ~ log(price), data=oj, col=brandcol[oj$brand])"

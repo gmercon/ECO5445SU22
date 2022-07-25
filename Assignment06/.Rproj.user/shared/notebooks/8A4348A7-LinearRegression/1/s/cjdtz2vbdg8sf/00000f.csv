@@ -1,0 +1,2 @@
+"0","states <- as.data.frame(state.x77[, c(""Murder"", ""Population"","
+"0","    ""Illiteracy"", ""Income"", ""Frost"")])"
