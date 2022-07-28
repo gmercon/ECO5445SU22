@@ -1,9 +1,0 @@
-"0","plot_ly(oj, y = ~logPrice, x = ~logmove, type = 'scatter',color = ~brand)"
-"2","No scatter mode specifed:
-  Setting the mode to markers
-  Read more about this attribute -> https://plotly.com/r/reference/#scatter-mode
-"
-"2","No scatter mode specifed:
-  Setting the mode to markers
-  Read more about this attribute -> https://plotly.com/r/reference/#scatter-mode
-"

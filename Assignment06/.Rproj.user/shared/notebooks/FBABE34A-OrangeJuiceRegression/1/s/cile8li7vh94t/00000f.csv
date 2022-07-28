@@ -1,2 +1,0 @@
-"0","oj$logPrice <- log(oj$price)"
-"0","oj$logmove <- log(oj$sales)"

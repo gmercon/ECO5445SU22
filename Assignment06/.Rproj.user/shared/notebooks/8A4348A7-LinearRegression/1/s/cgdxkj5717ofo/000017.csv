@@ -1,2 +1,0 @@
-"0","plot(women$height, women$weight, main = ""Women Age 30-39"","
-"0","    xlab = ""Height (in inches)"", ylab = ""Weight (in pounds)"")"

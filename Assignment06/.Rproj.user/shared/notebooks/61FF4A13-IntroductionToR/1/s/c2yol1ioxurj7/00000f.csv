@@ -1,4 +1,0 @@
-"0","n <- 10"
-"0","mycolors <- rainbow(n)"
-"0","pie(rep(1, n), labels = mycolors, col = mycolors)"
-"0",""

@@ -28,13 +28,13 @@ class(Two)
 TwoPointO <- 2.0
 class(TwoPointO)
 
-TenJ <- "10j"
+TenJ <- "10j" # Did you try without the quotes?
 class(TenJ)
 
 Phrase <- "2 cool for school"
 class(Phrase)
 
-ThisIs <- TRUE
+ThisIs <- TRUE # Did you it as True?
 class(ThisIs)
 
 ```
@@ -83,6 +83,15 @@ else {
 return("Not a multiple of 3, 5, or 15")
 } 
 }
+
+
+# Missing testing cases. Should also have a catch within function to catch strings. I see the preconditions, but it is needed within the function (-4)
+
+# FoobarFunction("cat") commented out to allow document run
+FoobarFunction(90)
+FoobarFunction(20)
+FoobarFunction(9)
+
 ```
 
 
@@ -98,6 +107,8 @@ Data <- swiss
 
 ```{r}
 summary(swiss)
+
+# Needs spread metrics as well (sd or variance) (-5)
 ```
 
 

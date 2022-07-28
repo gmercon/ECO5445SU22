@@ -1,9 +1,0 @@
-"0","# Add any packages you want in this chunk:"
-"0",""
-"0","library(readr)"
-"0","library(gvlma)"
-"0","library(MASS)"
-"0","library(leaps)"
-"0","library(car)"
-"2","Loading required package: carData
-"

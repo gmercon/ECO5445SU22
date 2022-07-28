@@ -1,6 +1,0 @@
-"0","beta <- coef(reg)"
-"0",""
-"0","brandcol <- c(""green"",""red"",""gold"")"
-"0",""
-"0","plot(log(sales) ~ log(price), data=oj, col=brandcol[oj$brand], "
-"0","	cex=.1, pch=20, bty=""n"")"

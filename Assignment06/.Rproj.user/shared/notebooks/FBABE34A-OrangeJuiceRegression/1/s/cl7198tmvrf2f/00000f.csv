@@ -1,3 +1,0 @@
-"0","brandcol <- c(""green"",""red"",""gold"")"
-"0","par(mfrow=c(1,2))"
-"0","plot(log(price) ~ brand, data=oj, col=brandcol)"

@@ -1,5 +1,0 @@
-"0","library(car)"
-"0",""
-"0","scatterplot(weight ~ height, data = women, spread = FALSE,"
-"0","    lty.smooth = 2, pch = 19, main = ""Women Age 30-39"", xlab = ""Height (inches)"","
-"0","    ylab = ""Weight (lbs.)"")"
