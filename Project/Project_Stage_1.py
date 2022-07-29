@@ -4,6 +4,10 @@ Created on Wed Jul 13 13:48:11 2022
 
 @author: Guillermo
 """
+###############################################################################
+# Copy header formatting from my scripts
+###############################################################################
+
 
 # This project will follow a paper published in the American Economic Review. 
 # The purpose of the paper was to test for the presence of racial 
@@ -22,6 +26,7 @@ import matplotlib.pyplot as plt
 
 os.getcwd()
 git_path = 'C:\\Users\\Guillermo\\Documents\\GitHub\\ECO5445SU22\\Project\\Data'
+git_path = 'C:/Users/jo585802/OneDrive - University of Central Florida/Documents/GitHub/ECO5445/Project/Data' # Needed line to test data
 os.chdir(git_path)
          
 # 3. Bring in the dataset provided within my repository. The variables in the 
@@ -41,6 +46,16 @@ Data_subset = housing[["s6","s7","s13", "s15", "s17","s23a","s27a","s33","s40","
 Col_names = ["Loan_Amount", "Action_Taken", "Race", "Sex" , "Income_Thousands", "Marital_Status", "Self_Employed", "Purchase_Price", "Approved_Credit", "Mortgage_Credit_History", "DTI_Housing", "DTI_Total", "School" ] 
 
 Data_subset.columns = [Col_names]
+
+###############################################################################
+# Why did you choose these variables in particular? What information from the
+# paper helped you decide?
+###############################################################################
+
+###############################################################################
+# The categorical variables are currently being treated as numeric. You cannot
+# do mean, sd, etc.
+###############################################################################
 
 # 4. Generate summary statistics on the set of variables selected, and explain 
 # the composition of the sample and of the characteristics of an average 
@@ -121,6 +136,11 @@ Loans = Data_subset["Action_Taken"]
 
 Loans.value_counts()
 
+###############################################################################
+# This next part requires you to look at a table, then manually input values.
+# We can extract values from the tables instead of hand typing them
+###############################################################################
+
 Loans_Approved = 2025
 Loans_Denied = 285
 Loans_Approved_Not_Accepted = 70
@@ -186,12 +206,17 @@ Approval_Values = np.array([["Black", 243, 96, 339], ["White", 1852, 189, 2041]]
 Approval_Table = pd.DataFrame(Approval_Values, columns=Cnames)
 print(Approval_Table)
 
+###############################################################################
+# Table does not fully match. Missing bottom row (Total) of table
+###############################################################################
+
 # 7. From the table you create in "6", calculate the following
 # P(Approved/White)
 # P(NotApproved/Black)
 
 P_White_and_Approved = White_Approved/2380
 print(round(P_White_and_Approved, 2))
+
 
 # Probability of being white and approved is around 78%
 
@@ -200,7 +225,10 @@ print(round(P_Black_and_Not_Approved, 2))
 
 # Probability of being black and not approved is around 4%
 
-
+###############################################################################
+# What we were actually looking for is the probability that a person would be
+# approved, given that we know they are white. So 1852/2041
+###############################################################################
 
 # Not sure if you actually wanted these values
 P_AW = White_Approved/Total_Approved
