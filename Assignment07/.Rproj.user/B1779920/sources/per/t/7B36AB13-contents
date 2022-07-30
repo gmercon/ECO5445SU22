@@ -9,24 +9,117 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
+```{r}
+
+library(readr)
+library(gvlma)
+library(MASS)
+library(leaps)
+library(car)
+library(gamlr)
+library(pROC)
+library(rpart)
+library(rpart.plot)
+library(party)
+library(randomForest)
+library(e1071)
+
+
+```
+
+
 1. This time, I want you to separate your data into testing and training. For this exercise, randomly extract 100 for testing different models, and save the other 900 for training your models.
+
+```{r}
+housing <- read_csv("~/GitHub/ECO5445SU22/Assignment07/data/prop_prices_reduced.csv", col_names = TRUE)
+
+housing$sale_def <- housing$sale_def/1000
+housing$dist_lakes <- housing$dist_lakes/mean(housing$dist_lakes)
+
+attach(housing)
+
+
+set.seed(1234)
+
+Data_subset <- sample(nrow(housing), .9*nrow(housing))
+
+housing.training <- housing[Data_subset,]
+housing.validate <- housing[-Data_subset,]
+
+```
+
+
 
 2. Run your final model you had in the previous assignment to the training data
 
+```{r}
+
+
+newfit2 <-  lm(log(sale_def) ~ bed + bath + area_heated + area + dist_cbd + log(dist_lakes) + pool, data = housing.training)
+summary(newfit2)
+
+```
+
+
 3. With the same model in part 2, run the standard LASSO regression model on the training data.
 
+```{r}
+
+housing.x <- housing.training[-c(1)]
+housing.y <- housing.training[c(1)]
+housing.x$dist_lakes <- log(housing.x$dist_lakes)
+
+
+housing.x <- data.matrix(housing.x)
+housing.y <- data.matrix(housing.y)
+
+
+spender <- gamlr(housing.x, log(housing.y), verb=TRUE, family = "gaussian", standardize = TRUE)
+
+
+summary(spender)
+plot(spender, ylim = c(-.05, .15), xlim = c(-6,-1)) 
+
+```
+
+
 4. Now using the same model in part 2, run a 10-fold cross-validated LASSO on the training data
+
+
+```{r}
+
+cv.spender <- cv.gamlr(housing.x, log(housing.y),
+	family="gaussian", verb=TRUE, standardize=TRUE, nfold = 10)
+
+```
+```{r}
+par(mfrow=c(1,2))
+plot(cv.housing)
+plot(cv.housing$gamlr) ## cv.gamlr has included a gamlr object into cv.nhlreg
+
+```
+
+
 
 5. Lastly, using the testing data, I want you to calculate the RMSE for each of the lambda's selection methods discussed (AIC, BIC, AICc, cv.min, cv.1se) and the the model in part 2. Which method performed the best in prediction the home price?
 
 
-```{r cars}
-summary(cars)
+```{r}
+
+Aicc <- coef(spender)
+Aicc
+exp(coef(spender))
+
+sum(Aicc!=0)
+Aicc[order(Aicc, decreasing = TRUE)]
+
+log(spender$lambda[which.min(AICc(spender))])
+log(spender$lambda[which.min(AIC(spender))])
+log(spender$lambda[which.min(BIC(spender))])
+log(cv.spender$lambda.min)
+log(cv.spender$lambda.1se)
+
 ```
 
-
-
-```{}
-
-
-```
