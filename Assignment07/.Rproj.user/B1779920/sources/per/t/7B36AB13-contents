@@ -87,6 +87,7 @@ plot(spender, ylim = c(-.05, .15), xlim = c(-6,-1))
 
 4. Now using the same model in part 2, run a 10-fold cross-validated LASSO on the training data
 
+- Below we cretae the cross validation Lasso model
 
 ```{r}
 
@@ -94,10 +95,13 @@ cv.spender <- cv.gamlr(housing.x, log(housing.y),
 	family="gaussian", verb=TRUE, standardize=TRUE, nfold = 10)
 
 ```
+
+- Below we plot the cross validation 
+
 ```{r}
 par(mfrow=c(1,2))
-plot(cv.housing)
-plot(cv.housing$gamlr) ## cv.gamlr has included a gamlr object into cv.nhlreg
+plot(cv.spender)
+plot(cv.spender$gamlr) ## cv.gamlr has included a gamlr object into cv.nhlreg
 
 ```
 
