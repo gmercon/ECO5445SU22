@@ -1,0 +1,4 @@
+"0","xweb <- sparseMatrix("
+"0","	i=as.numeric(web$id), j=as.numeric(web$site), x=visitpercent,"
+"0","	dims=c(nlevels(web$id),nlevels(web$site)),"
+"0","	dimnames=list(id=levels(web$id), site=levels(web$site)))"

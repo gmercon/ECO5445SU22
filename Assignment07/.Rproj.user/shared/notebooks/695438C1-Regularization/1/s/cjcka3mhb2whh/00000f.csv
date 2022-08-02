@@ -1,0 +1,2 @@
+"0","yspend <- read.csv(""browser-totalspend.csv"", row.names=1)  # use 1st column as row names"
+"0","yspend <- as.matrix(yspend) ## good practice to move from dataframe to matrix"

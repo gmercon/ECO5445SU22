@@ -1,4 +1,3 @@
-"0",""
 "0","cv.spender <- cv.gamlr(housing.x, log(housing.y),"
 "0","	family=""gaussian"", verb=TRUE, standardize=TRUE, nfold = 10)"
 "1","fold "
