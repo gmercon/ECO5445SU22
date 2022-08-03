@@ -3,25 +3,25 @@
     "path": "~/GitHub/ECO5445SU22/Project/Stage_2/ProjectStage2.Rmd",
     "project_path": "ProjectStage2.Rmd",
     "type": "r_markdown",
-    "hash": "2157038100",
+    "hash": "0",
     "contents": "",
-    "dirty": false,
+    "dirty": true,
     "created": 1659374647623.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "33,32",
-        "scrollLine": "25",
-        "last_setup_crc32": "297AB441bb338d19"
+        "cursorPosition": "48,99",
+        "scrollLine": "41",
+        "last_setup_crc32": "193549B4bb338d19"
     },
     "folds": "",
     "lastKnownWriteTime": 1659377318,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1659377318060,
+    "last_content_update": 1659492537670,
     "read_only": false,
     "read_only_alternatives": []
 }

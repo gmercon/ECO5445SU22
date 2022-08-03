@@ -12,36 +12,49 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
-
 library(readr)
 
 ```
-
 
 - In this final project, you will use R in order to evaluate logistic regression models with the objective of building a mortgage application approval/denial classifier. Of interest is modeling the probability that an applicant will be approved or denied as a function observables in order to classify applicants as being ones who will be approved and who will not be approved. The dataset and first questions are the same as Stage 1, but now you will need to use R.
 
 From the GitHub repository, download the .csv file. The dataset contains records on 2,380 applicants for mortgages in Boston. Also at our repo is a description of the variables and a paper published in the American Economic Review that first evaluated the data in order to test for the presence of racial discrimination in the mortgage approval process. You should first read the paper as it provides a detailed discussion of the data and insight on the determinants of the probability of being approved. After reading the paper and importing the dataset into R, do the following:
 
+
+________________________________________________________________________________________________________
 A. The variables in the dataset do not have intuitive names (e.g., the meaning of S3 is unclear). Referencing the data description and the AER paper, identify the qualitative dependent that you will be modeling and the set of covariates that you intend to include in your various models, and rename the variables so that they have (somewhat) intuitive names. Be certain that the debt-to-income ratio and the race, self-employed, marital status, and education indicator variables are included, among other variables.
 
 
 ```{r}
-Mortgagestats <- read_csv("Data/hmda_sw.csv")
-View(Mortgagestats)
+Mortgagestats <- read_csv("Data/hmda_sw.csv",show_col_types = FALSE)
 
-Mortgagestats <- Mortgagestats[c(1,37,8,9,10,11,12,13)]
+Mortgagestats <- Mortgagestats[c(5,6,9,11,13,20,24,30,34,36,39,40,59)]
 
-colnames(Mortgagestats) <- Colin
 # s6, s7, s13, s15, s17, s23a, s27a, s33, s40, s42, s45, S46, school
 
-Colin = c("Loan_Amount", "Action_Taken", "Race", "Sex", "Income_Thousands", "Marital_Status", "Self_Employed", "Purchase_Price", "Approved_Credit", "Mortgage_Credit_History", "DTI_Housing", "DTI_Total", "School")
+Coln = c("Loan_Amount", "Action_Taken", "Race","Sex", "Income_Thousands", "Marital_Status", "Self_Employed", "Purchase_Price", "Credit_Approved", "Mortgage_Credit_History", "DTI_Housing", "DTI_Total", "School")
+
+colnames(Mortgagestats) <- Coln
+
+Mortgagestats[Mortgagestats == 999999.4] <- NA
+
+Mortgagestats$Race <- factor(Mortgagestats$Race, levels = c(3,5),labels = c("Black","White"))
+Mortgagestats$Action_Taken <- factor(Mortgagestats$Action_Taken, levels = c(1,2,3), labels = c("Approved", "Approved", "Denied"))
+Mortgagestats$Sex <- factor(Mortgagestats$Sex, levels = c(1,2,3), labels = c("Male", "Female", "NA"))
+Mortgagestats$Marital_Status <- factor(Mortgagestats$Marital_Status)
 
 ```
+- Above we pull in the data and then begin to clean and prep it for usage
+- First we reduce the number of columns to the variables we deemed important, also we rename the columns to more intuitive names that represent what the variable is.
+- From there we remove any missing data points which were previously coded as 999,999.4 and end by 
 
 
 B. Generate summary statistics on the set of variables selected in A, and explain the composition of the sample and of the characteristics of an average (representative) applicant. In the process, you should also generate and histograms and frequency counts on particular variables of interest, which can be referenced in your explanation of the composition of the sample and of a representative applicant.
 
 ```{r}
+
+summary(Mortgagestats)
+
 
 ```
 
