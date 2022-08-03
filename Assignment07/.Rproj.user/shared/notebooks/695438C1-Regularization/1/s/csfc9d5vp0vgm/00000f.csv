@@ -1,0 +1,2 @@
+"0","machinetotals <- as.vector(tapply(web$visits,web$id,sum)) "
+"0","visitpercent <- 100*web$visits/machinetotals[web$id]"

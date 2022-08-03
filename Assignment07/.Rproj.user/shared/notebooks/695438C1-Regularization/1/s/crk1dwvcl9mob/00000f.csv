@@ -1,0 +1,4 @@
+"0","sitenames <- scan(""browser-sites.txt"", what=""character"")"
+"2","Read 1000 items
+"
+"0","web$site <- factor(web$site, levels=1:length(sitenames), labels=sitenames)"
