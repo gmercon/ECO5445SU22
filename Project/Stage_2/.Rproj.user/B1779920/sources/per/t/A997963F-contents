@@ -72,9 +72,9 @@ hist(Mortgagestats$Income_Thousands, breaks = "fd", xlab = "Income(Thousands)")
 hist(Mortgagestats$Purchase_Price, breaks = "fd", xlab = "Purchase Price(Thousands)")
 hist(Mortgagestats$DTI_Housing, breaks = "fd", xlab = "Debt to Income, Housing Debt")
 hist(Mortgagestats$DTI_Total, breaks = "fd", xlab = "Debt to Income, Total Debt")
-hist(Mortgagestats$School, breaks = "fd",xlab = "Years of experience")
+hist(Mortgagestats$School, breaks = "fd",xlab = "Years of Schooling")
 ```
-- When examining our data we see that 
+- When examining our data we see that the average loan amount is for 139,000 with a large standard deviation, likely due to a few highly expensive homes in the data. The average applicant is a white male, a majority of applicants will actually be approved for their loans. The average income for applicants is around 76,000, though this has a wide spread as well due to the few incredibly high income applicants. Most applicants are not self-employed and most likely married. Finally they have around an average of 16 years of schooling which means they completed college, although a lot of people fall at 12 years meaning they only completed high school.  
 
 
 C. With the full sample, estimate the logistic regression model, where the deny/approve dummy variable is the response variable and the debt-to-income ratio and the race, self-employed, marital status, and education indicator variables are the co-variates. Graph the ROC curve and calculate the AUC. Also, compute the confusion matrix at alternative cut-off levels, and calculate the classifier sensitivity, specificity, the false-positive rate, the false-negative rate, the model accuracy and error rate to confirm they are the same as those produced by R. Provide a written explanation summarizing the findings.
