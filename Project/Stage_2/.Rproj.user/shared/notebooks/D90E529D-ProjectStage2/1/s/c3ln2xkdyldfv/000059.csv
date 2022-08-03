@@ -1,0 +1,1 @@
+"0","hist(Mortgagestats$DTI_Total, breaks = ""fd"", xlab = ""Debt to Income, Total Debt"")"

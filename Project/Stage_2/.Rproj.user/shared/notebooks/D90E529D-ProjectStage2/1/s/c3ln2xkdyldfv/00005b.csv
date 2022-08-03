@@ -1,0 +1,1 @@
+"0","hist(Mortgagestats$School, breaks = ""fd"",xlab = ""Years of experience"")"

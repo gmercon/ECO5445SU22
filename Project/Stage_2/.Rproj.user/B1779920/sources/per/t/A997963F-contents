@@ -42,26 +42,49 @@ Mortgagestats$Race <- factor(Mortgagestats$Race, levels = c(3,5),labels = c("Bla
 Mortgagestats$Action_Taken <- factor(Mortgagestats$Action_Taken, levels = c(1,2,3), labels = c("Approved", "Approved", "Denied"))
 Mortgagestats$Sex <- factor(Mortgagestats$Sex, levels = c(1,2,3), labels = c("Male", "Female", "NA"))
 Mortgagestats$Marital_Status <- factor(Mortgagestats$Marital_Status)
+Mortgagestats$Mortgage_Credit_History <- factor(Mortgagestats$Mortgage_Credit_History, levels = c(1,2), labels = c("NoLate", "NoHist"))
+Mortgagestats$Credit_Approved <- factor(Mortgagestats$Credit_Approved, levels = c(0,1), labels = c("No","Yes"))
 
 ```
 - Above we pull in the data and then begin to clean and prep it for usage
-- First we reduce the number of columns to the variables we deemed important, also we rename the columns to more intuitive names that represent what the variable is.
-- From there we remove any missing data points which were previously coded as 999,999.4 and end by 
+- First we reduce the number of columns to the variables we deemed important, also we rename the columns to more intuitive names that represent the variable
+- From there we remove any missing data points that were previously coded as 999,999.4 and end by changing all categorical data back into categories instead of numbers
 
 
 B. Generate summary statistics on the set of variables selected in A, and explain the composition of the sample and of the characteristics of an average (representative) applicant. In the process, you should also generate and histograms and frequency counts on particular variables of interest, which can be referenced in your explanation of the composition of the sample and of a representative applicant.
 
 ```{r}
-
 summary(Mortgagestats)
 
+sd(Mortgagestats$Loan_Amount, na.rm = TRUE)
+sd(Mortgagestats$Income_Thousands, na.rm =TRUE)
+sd(Mortgagestats$Purchase_Price, na.rm = TRUE)
+sd(Mortgagestats$DTI_Housing, na.rm = TRUE)
+sd(Mortgagestats$DTI_Total, na.rm = TRUE)
+sd(Mortgagestats$School, na.rm = TRUE)
 
 ```
+
+
+```{r}
+hist(Mortgagestats$Loan_Amount, breaks = "fd", xlab = "Loan Amount(Thousands)")
+hist(Mortgagestats$Income_Thousands, breaks = "fd", xlab = "Income(Thousands)")
+hist(Mortgagestats$Purchase_Price, breaks = "fd", xlab = "Purchase Price(Thousands)")
+hist(Mortgagestats$DTI_Housing, breaks = "fd", xlab = "Debt to Income, Housing Debt")
+hist(Mortgagestats$DTI_Total, breaks = "fd", xlab = "Debt to Income, Total Debt")
+hist(Mortgagestats$School, breaks = "fd",xlab = "Years of experience")
+```
+- When examining our data we see that 
 
 
 C. With the full sample, estimate the logistic regression model, where the deny/approve dummy variable is the response variable and the debt-to-income ratio and the race, self-employed, marital status, and education indicator variables are the co-variates. Graph the ROC curve and calculate the AUC. Also, compute the confusion matrix at alternative cut-off levels, and calculate the classifier sensitivity, specificity, the false-positive rate, the false-negative rate, the model accuracy and error rate to confirm they are the same as those produced by R. Provide a written explanation summarizing the findings.
 
 ```{r}
+
+MFit <- lm(Action_Taken ~ DTI_Housing + DTI_Total + Race + Self_Employed + Marital_Status + School, data = Mortgagestats)
+MFit
+
+
 
 ```
 

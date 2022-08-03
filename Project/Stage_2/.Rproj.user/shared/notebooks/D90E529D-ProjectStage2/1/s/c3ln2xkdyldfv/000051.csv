@@ -1,0 +1,1 @@
+"0","hist(Mortgagestats$Loan_Amount, breaks = ""fd"", xlab = ""Loan Amount(Thousands)"")"
