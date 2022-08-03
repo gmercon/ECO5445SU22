@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(readr)
 library(pROC)
+library(gamlr)
 
 ```
 
@@ -40,14 +41,12 @@ colnames(Mortgagestats) <- Coln
 Mortgagestats[Mortgagestats == 999999.4] <- NA
 
 Mortgagestats$Race <- factor(Mortgagestats$Race, levels = c(3,5),labels = c("Black","White"))
-Mortgagestats$Action_Taken <- factor(Mortgagestats$Action_Taken, levels = c(1,2,3), labels = c("Approved", "Approved", "Denied"))
+Mortgagestats$Action_Taken <- factor(Mortgagestats$Action_Taken, levels = c(1,2,3), labels = c(1,1,0))
 Mortgagestats$Sex <- factor(Mortgagestats$Sex, levels = c(1,2,3), labels = c("Male", "Female", "NA"))
 Mortgagestats$Marital_Status <- factor(Mortgagestats$Marital_Status)
 Mortgagestats$Mortgage_Credit_History <- factor(Mortgagestats$Mortgage_Credit_History, levels = c(1,2), labels = c("NoLate", "NoHist"))
 Mortgagestats$Credit_Approved <- factor(Mortgagestats$Credit_Approved, levels = c(0,1), labels = c("No","Yes"))
 
-
-Variables <- Mortgagestats[-c(2)]
 
 ```
 - Above we pull in the data and then begin to clean and prep it for usage
@@ -77,6 +76,9 @@ hist(Mortgagestats$Purchase_Price, breaks = "fd", xlab = "Purchase Price(Thousan
 hist(Mortgagestats$DTI_Housing, breaks = "fd", xlab = "Debt to Income, Housing Debt")
 hist(Mortgagestats$DTI_Total, breaks = "fd", xlab = "Debt to Income, Total Debt")
 hist(Mortgagestats$School, breaks = "fd",xlab = "Years of Schooling")
+barplot(as.matrix(na.omit(Mortgagestats$Race)))
+barplot(as.matrix(na.omit(Mortgagestats$Sex)))
+barplot(as.matrix(na.omit(Mortgagestats$Marital_Status)))
 ```
 - When examining our data we see that the average loan amount is for 139,000 with a large standard deviation, likely due to a few highly expensive homes in the data. The average applicant is a white male, a majority of applicants will actually be approved for their loans. The average income for applicants is around 76,000, though this has a wide spread as well due to the few incredibly high income applicants. Most applicants are not self-employed and most likely married. Finally they have around an average of 16 years of schooling which means they completed college, although a lot of people fall at 12 years meaning they only completed high school.  
 
@@ -93,6 +95,7 @@ summary(MFit)
 ```
 
 - Here we create the ROC curve and calculate the AUC
+- We see that our ROC best threshold is around .12 and our area under the curve is .7237
 
 ```{r}
 prob <- predict(MFit, Mortgagestats, type = "response")
@@ -101,6 +104,8 @@ prob <- predict(MFit, Mortgagestats, type = "response")
 my_roc <- roc(Mortgagestats$Action_Taken ~ prob, plot = TRUE)
 coords(my_roc, "best", ret = "threshold")
 
+auc(Mortgagestats$Action_Taken,prob)
+
 ```
 - Below we calculate several confusion matrixes
 
@@ -108,31 +113,75 @@ coords(my_roc, "best", ret = "threshold")
 
 logit.pred <- factor(prob > 0.30, levels = c(FALSE,TRUE),
                      labels = c("Approved","Denied"))
-logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
-logit.perf
+logit.perf1 <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf1
 
 logit.pred <- factor(prob > 0.5, levels = c(FALSE,TRUE),
                      labels = c("Approved","Denied"))
-logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
-logit.perf
+logit.perf2 <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf2
 
 logit.pred <- factor(prob > 0.75, levels = c(FALSE,TRUE),
                      labels = c("Approved","Denied"))
-logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
-logit.perf
+logit.perf3 <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf3
 
 logit.pred <- factor(prob > 0.12, levels = c(FALSE,TRUE),
                      labels = c("Approved","Denied"))
-logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
-logit.perf
+logit.perf4 <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf4
 
 ```
 
+
+```{r}
+performance <- function(table, n = 4){
+  if(!all(dim(table) == c(2,2)))
+    stop("Must be a 2 x 2 table")
+  tn = table[1,1]
+  fp = table[1,2]
+  fn = table[2,1]
+  tp = table[2,2]
+  sensitivity = tp/(tp+fn)
+  specificity = tn/(tn+fp)
+  ppp = tp/(tp+fp)
+  npp = tn/(tn+fp)
+  hitrate = (tp+tn)/(tp+tn+fp+fn)
+  result <- paste0("Sensitivity = ", round(sensitivity,n),
+                   "\nSpecificity = ",round(specificity,n),
+                   "\nPositive Predictive Value = ", round(ppp,n),
+                   "\nNegative Predictive Value = ", round(npp,n),
+                   "\nAccuracy = ", round(hitrate,n))
+  cat(result)
+}
+```
+
+```{r}
+
+performance(logit.perf1)
+performance(logit.perf2)
+performance(logit.perf3)
+performance(logit.perf4)
+
+```
+
+- After reviewing our models we see that logit.perf 2 has the highest accuracy with an ROC of 0.5. At our best threshold ROC level of .12 we see that our accuracy decreases, but our sensitivity increased drastically. This allows us to catch more denied mortgages while sacrificing some of the actual approved mortgages.  
 
 
 D. Next, using 10-fold cross validation, estimate a variety of logistic regression models and evaluate their predictive performance across a range of threshold values in each case. The models can (should) include interaction variables and polynomial terms (e.g., quadratic and cubic variables). Of interest is identifying the model and threshold value that yield the smallest average test misclassification rate; however, you can also calculate model accuracy and the AUC. Document in a table the performance of the various models using the chosen performance measures.
 
 ```{r}
+
+Y <- as.matrix(na.omit(Mortgagestats$Action_Taken))
+Y[Y == "1"] <- 1
+Y[Y == "0"] <- 0
+X1 <- (Mortgagestats[-c(2)])
+
+all(is.finite(Y))
+
+cv.reg1 <- cv.gamlr(X1, Y,
+	family="binomial", verb=TRUE, standardize=TRUE, nfold = 10)
+
 
 ```
 
@@ -143,12 +192,4 @@ E. Of the competing models that you estimated and thresholds that you evaluated,
 ```{r}
 
 ```
-
-F. Upload an error-free and well-organized copy of your program and a report that summarizes your modeling efforts and the discussion/explanation of your findings from B, C, D, and E. Be certain to include a table describing the results from the various models you evaluated, and be certain to include the estimation results from your superior model estimated with the full dataset.
-
-
-```{r}
-
-```
-
 

@@ -1,0 +1,25 @@
+"0",""
+"0","performance(logit.perf1)"
+"1","Sensitivity = 0.2254
+Specificity = 0.9566
+Positive Predictive Value = 0.4156
+Negative Predictive Value = 0.9566
+Accuracy = 0.8684"
+"0","performance(logit.perf2)"
+"1","Sensitivity = 0.0634
+Specificity = 0.9961
+Positive Predictive Value = 0.6923
+Negative Predictive Value = 0.9961
+Accuracy = 0.8837"
+"0","performance(logit.perf3)"
+"1","Sensitivity = 0.0176
+Specificity = 0.999
+Positive Predictive Value = 0.7143
+Negative Predictive Value = 0.999
+Accuracy = 0.8807"
+"0","performance(logit.perf4)"
+"1","Sensitivity = 0.6127
+Specificity = 0.7519
+Positive Predictive Value = 0.2529
+Negative Predictive Value = 0.7519
+Accuracy = 0.7351"
