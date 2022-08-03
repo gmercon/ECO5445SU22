@@ -36,13 +36,14 @@ Bring in the data and make sure the data types are correct. If not, make the pro
 
 ```{r}
 
-prop_prices_reduced <- read_csv("~/GitHub/ECO5445SU22/Assignment06/data/prop_prices_reduced.csv")
+prop_prices_reduced <- read_csv("data/prop_prices_reduced.csv")
 View(prop_prices_reduced)
 
 prop_prices_reduced$sale_def <- prop_prices_reduced$sale_def/1000
 
 attach(prop_prices_reduced)
 
+# pool is categorical, so you will need to turn that into a factor (-2)
 
 ```
 
@@ -87,7 +88,7 @@ Provide basic summary statistics for univariate analysis. Also, provide the corr
 ```{r}
 
 summary(prop_prices_reduced)
-
+# what about spread? sd/var (-5)
 cor(prop_prices_reduced)
 
 ```
@@ -108,7 +109,9 @@ summary(fit)
 
 Which of the variables tested significant at the 95% level? Looking at the results and answering outside of the chunk is sufficient.
 
-Answer: The variables that tested significant at the 95% level include bed, bath, area heated, area, distance to cbd, and pool. This leaves distance to lakes as insignificant. Another thing to note is that pool tested significant at 95% while the rest of the variables tested significant at up to 99.99% 
+Answer: The variables that tested significant at the 95% level include bed, bath, area heated, area, distance to cbd, and pool. This leaves distance to lakes as insignificant. `Another thing to note is that pool tested significant at 95%` while the rest of the variables tested significant at up to 99.99% 
+
+`Pool actually didn't test significant at 95% (-2)`
 
 ## Evaluating the model
 
@@ -138,6 +141,7 @@ qqPlot(fit, labels = FALSE, simulate = TRUE, main = "Q-Q Plot")
 
 - We also see that distance to lakes is not significant. This is a violation of Gauss Markov assumption #3. I will adjust this by trying several variations. First we will change "distance to lakes" to a percentage by dividing the distance by the mean distance to lakes. I will then try to change the formula so that distance to lakes is included as a quadratic variable. Finally I will take the original formula and take the log of the deflated sales and the log of the distance to lakes. I will then compare the two formulas to see which has a higher R^2 and more significance.  
 
+`What about 2, 4, and 5 (-15)`
 
 ## New Model
 
