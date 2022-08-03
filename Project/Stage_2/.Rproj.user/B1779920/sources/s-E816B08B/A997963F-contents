@@ -13,10 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(readr)
+library(pROC)
 
 ```
 
-- In this final project, you will use R in order to evaluate logistic regression models with the objective of building a mortgage application approval/denial classifier. Of interest is modeling the probability that an applicant will be approved or denied as a function observables in order to classify applicants as being ones who will be approved and who will not be approved. The dataset and first questions are the same as Stage 1, but now you will need to use R.
+In this final project, you will use R in order to evaluate logistic regression models with the objective of building a mortgage application approval/denial classifier. Of interest is modeling the probability that an applicant will be approved or denied as a function observables in order to classify applicants as being ones who will be approved and who will not be approved. The dataset and first questions are the same as Stage 1, but now you will need to use R.
 
 From the GitHub repository, download the .csv file. The dataset contains records on 2,380 applicants for mortgages in Boston. Also at our repo is a description of the variables and a paper published in the American Economic Review that first evaluated the data in order to test for the presence of racial discrimination in the mortgage approval process. You should first read the paper as it provides a detailed discussion of the data and insight on the determinants of the probability of being approved. After reading the paper and importing the dataset into R, do the following:
 
@@ -44,6 +45,9 @@ Mortgagestats$Sex <- factor(Mortgagestats$Sex, levels = c(1,2,3), labels = c("Ma
 Mortgagestats$Marital_Status <- factor(Mortgagestats$Marital_Status)
 Mortgagestats$Mortgage_Credit_History <- factor(Mortgagestats$Mortgage_Credit_History, levels = c(1,2), labels = c("NoLate", "NoHist"))
 Mortgagestats$Credit_Approved <- factor(Mortgagestats$Credit_Approved, levels = c(0,1), labels = c("No","Yes"))
+
+
+Variables <- Mortgagestats[-c(2)]
 
 ```
 - Above we pull in the data and then begin to clean and prep it for usage
@@ -79,14 +83,51 @@ hist(Mortgagestats$School, breaks = "fd",xlab = "Years of Schooling")
 
 C. With the full sample, estimate the logistic regression model, where the deny/approve dummy variable is the response variable and the debt-to-income ratio and the race, self-employed, marital status, and education indicator variables are the co-variates. Graph the ROC curve and calculate the AUC. Also, compute the confusion matrix at alternative cut-off levels, and calculate the classifier sensitivity, specificity, the false-positive rate, the false-negative rate, the model accuracy and error rate to confirm they are the same as those produced by R. Provide a written explanation summarizing the findings.
 
+- Below we create our logistical regression model
+
 ```{r}
+MFit <- glm(Action_Taken ~ DTI_Housing + DTI_Total + Race + Self_Employed + Marital_Status + School, data = Mortgagestats, family = "binomial")
 
-MFit <- lm(Action_Taken ~ DTI_Housing + DTI_Total + Race + Self_Employed + Marital_Status + School, data = Mortgagestats)
-MFit
-
-
+summary(MFit)
 
 ```
+
+- Here we create the ROC curve and calculate the AUC
+
+```{r}
+prob <- predict(MFit, Mortgagestats, type = "response")
+
+
+my_roc <- roc(Mortgagestats$Action_Taken ~ prob, plot = TRUE)
+coords(my_roc, "best", ret = "threshold")
+
+```
+- Below we calculate several confusion matrixes
+
+```{r}
+
+logit.pred <- factor(prob > 0.30, levels = c(FALSE,TRUE),
+                     labels = c("Approved","Denied"))
+logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf
+
+logit.pred <- factor(prob > 0.5, levels = c(FALSE,TRUE),
+                     labels = c("Approved","Denied"))
+logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf
+
+logit.pred <- factor(prob > 0.75, levels = c(FALSE,TRUE),
+                     labels = c("Approved","Denied"))
+logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf
+
+logit.pred <- factor(prob > 0.12, levels = c(FALSE,TRUE),
+                     labels = c("Approved","Denied"))
+logit.perf <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
+logit.perf
+
+```
+
 
 
 D. Next, using 10-fold cross validation, estimate a variety of logistic regression models and evaluate their predictive performance across a range of threshold values in each case. The models can (should) include interaction variables and polynomial terms (e.g., quadratic and cubic variables). Of interest is identifying the model and threshold value that yield the smallest average test misclassification rate; however, you can also calculate model accuracy and the AUC. Document in a table the performance of the various models using the chosen performance measures.

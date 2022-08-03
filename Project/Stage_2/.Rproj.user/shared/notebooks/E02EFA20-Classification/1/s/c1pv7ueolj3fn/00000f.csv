@@ -1,0 +1,6 @@
+"0",""
+"0","my_roc <- roc(df.validate$class ~ prob, plot = TRUE)"
+"2","Setting levels: control = benign, case = malignant
+"
+"2","Setting direction: controls < cases
+"
