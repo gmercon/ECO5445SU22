@@ -1,0 +1,28 @@
+{
+    "id": "BD351960",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1659642305720.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "id": "ba0e689183ce44d982f52780646ba7c2",
+        "name": "cv.reg1",
+        "title": "cv.reg1",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 3905807469979711025,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1659642305720,
+    "read_only": false,
+    "read_only_alternatives": []
+}

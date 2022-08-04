@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(pROC)
 library(gamlr)
-
+library(boot)
 ```
 
 In this final project, you will use R in order to evaluate logistic regression models with the objective of building a mortgage application approval/denial classifier. Of interest is modeling the probability that an applicant will be approved or denied as a function observables in order to classify applicants as being ones who will be approved and who will not be approved. The dataset and first questions are the same as Stage 1, but now you will need to use R.
@@ -30,35 +30,67 @@ A. The variables in the dataset do not have intuitive names (e.g., the meaning o
 ```{r}
 Mortgagestats <- read_csv("Data/hmda_sw.csv",show_col_types = FALSE)
 
-Mortgagestats <- Mortgagestats[c(5,6,9,11,13,20,24,30,34,36,39,40,59)]
+Mortgagestats <- Mortgagestats[c(5,6,9,11,13,20,24,30,34,39,40,59)]
 
-# s6, s7, s13, s15, s17, s23a, s27a, s33, s40, s42, s45, S46, school
+# s6, s7, s13, s15, s17, s23a, s27a, s33, s40, s45, S46, school
 
-Coln = c("Loan_Amount", "Action_Taken", "Race","Sex", "Income_Thousands", "Marital_Status", "Self_Employed", "Purchase_Price", "Credit_Approved", "Mortgage_Credit_History", "DTI_Housing", "DTI_Total", "School")
+Coln = c("Loan_Amount", "Action_Taken", "Race","Sex", "Income_Thousands", "Marital_Status", "Self_Employed", "Purchase_Price", "Credit_Approved", "DTI_Housing", "DTI_Total", "School")
 
 colnames(Mortgagestats) <- Coln
 
 Mortgagestats[Mortgagestats == 999999.4] <- NA
+Mortgagestats <- na.omit(Mortgagestats)
+
 
 Mortgagestats$Race <- factor(Mortgagestats$Race, levels = c(3,5),labels = c("Black","White"))
 Mortgagestats$Action_Taken <- factor(Mortgagestats$Action_Taken, levels = c(1,2,3), labels = c(1,1,0))
 Mortgagestats$Sex <- factor(Mortgagestats$Sex, levels = c(1,2,3), labels = c("Male", "Female", "NA"))
 Mortgagestats$Marital_Status <- factor(Mortgagestats$Marital_Status)
-Mortgagestats$Mortgage_Credit_History <- factor(Mortgagestats$Mortgage_Credit_History, levels = c(1,2), labels = c("NoLate", "NoHist"))
+#Mortgagestats$Mortgage_Credit_History <- factor(Mortgagestats$Mortgage_Credit_History, levels = c(1,2), labels = c("NoLate", "NoHist"))
 Mortgagestats$Credit_Approved <- factor(Mortgagestats$Credit_Approved, levels = c(0,1), labels = c("No","Yes"))
 
-
 ```
+
 - Above we pull in the data and then begin to clean and prep it for usage
 - First we reduce the number of columns to the variables we deemed important, also we rename the columns to more intuitive names that represent the variable
 - From there we remove any missing data points that were previously coded as 999,999.4 and end by changing all categorical data back into categories instead of numbers
+
+```{r}
+#Mortgagestats$NRace <- Mortgagestats$Race
+#Mortgagestats$NRace[Mortgagestats$NRace == 3] <- 0
+#Mortgagestats$NRace[Mortgagestats$NRace == 5] <- 1
+
+#Mortgagestats$NAT <- Mortgagestats$Action_Taken
+#Mortgagestats$NAT[Mortgagestats$NAT == 1] <- 1
+#Mortgagestats$NAT[Mortgagestats$NAT == 2] <- 1
+#Mortgagestats$NAT[Mortgagestats$NAT == 3] <- 0
+
+#Mortgagestats$NSex <- Mortgagestats$Sex
+#Mortgagestats$NSex[Mortgagestats$NSex == 1] <- 1
+#Mortgagestats$NSex[Mortgagestats$NSex == 2] <- 0
+#Mortgagestats$NSex[Mortgagestats$NSex == 3] <- 
+
+#Mortgagestats$NMS <- Mortgagestats$Marital_Status
+#Mortgagestats$NMS[Mortgagestats$NMS == "M"] <- 1
+#Mortgagestats$NMS[Mortgagestats$NMS == "U"] <- 0
+#Mortgagestats$NMS[Mortgagestats$NMS == "S"] <- 0
+
+#Mortgagestats$NMCH <- Mortgagestats$Mortgage_Credit_History
+#Mortgagestats$NMCH[Mortgagestats$NMCH == 1] <- 1
+#Mortgagestats$NMCH[Mortgagestats$NMCH == 2] <- 0
+
+#Mortgagestats$NCA <- Mortgagestats$Credit_Approved
+#Mortgagestats$NCA[Mortgagestats$NCA == 0] <- 0
+#Mortgagestats$NCA[Mortgagestats$NCA == 1] <- 1
+#Mortgagestats$NCA[Mortgagestats$NCA == 666] <- 0
+```
 
 
 B. Generate summary statistics on the set of variables selected in A, and explain the composition of the sample and of the characteristics of an average (representative) applicant. In the process, you should also generate and histograms and frequency counts on particular variables of interest, which can be referenced in your explanation of the composition of the sample and of a representative applicant.
 
 ```{r}
 summary(Mortgagestats)
-
+cor(as.matrix(Mortgagestats[-c(2)]),Mortgagestats[c(2)])
 sd(Mortgagestats$Loan_Amount, na.rm = TRUE)
 sd(Mortgagestats$Income_Thousands, na.rm =TRUE)
 sd(Mortgagestats$Purchase_Price, na.rm = TRUE)
@@ -76,9 +108,7 @@ hist(Mortgagestats$Purchase_Price, breaks = "fd", xlab = "Purchase Price(Thousan
 hist(Mortgagestats$DTI_Housing, breaks = "fd", xlab = "Debt to Income, Housing Debt")
 hist(Mortgagestats$DTI_Total, breaks = "fd", xlab = "Debt to Income, Total Debt")
 hist(Mortgagestats$School, breaks = "fd",xlab = "Years of Schooling")
-barplot(as.matrix(na.omit(Mortgagestats$Race)))
-barplot(as.matrix(na.omit(Mortgagestats$Sex)))
-barplot(as.matrix(na.omit(Mortgagestats$Marital_Status)))
+
 ```
 - When examining our data we see that the average loan amount is for 139,000 with a large standard deviation, likely due to a few highly expensive homes in the data. The average applicant is a white male, a majority of applicants will actually be approved for their loans. The average income for applicants is around 76,000, though this has a wide spread as well due to the few incredibly high income applicants. Most applicants are not self-employed and most likely married. Finally they have around an average of 16 years of schooling which means they completed college, although a lot of people fall at 12 years meaning they only completed high school.  
 
@@ -95,19 +125,17 @@ summary(MFit)
 ```
 
 - Here we create the ROC curve and calculate the AUC
-- We see that our ROC best threshold is around .12 and our area under the curve is .7237
+- We see that our ROC best threshold is around .13 and our area under the curve is .7237
 
 ```{r}
 prob <- predict(MFit, Mortgagestats, type = "response")
 
 
-my_roc <- roc(Mortgagestats$Action_Taken ~ prob, plot = TRUE)
+my_roc <- roc(Mortgagestats$Action_Taken ~ prob, plot = TRUE, print.auc = TRUE)
 coords(my_roc, "best", ret = "threshold")
 
-auc(Mortgagestats$Action_Taken,prob)
-
 ```
-- Below we calculate several confusion matrixes
+- Below we calculate several confusion matrices
 
 ```{r}
 
@@ -126,7 +154,7 @@ logit.pred <- factor(prob > 0.75, levels = c(FALSE,TRUE),
 logit.perf3 <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
 logit.perf3
 
-logit.pred <- factor(prob > 0.12, levels = c(FALSE,TRUE),
+logit.pred <- factor(prob > 0.13, levels = c(FALSE,TRUE),
                      labels = c("Approved","Denied"))
 logit.perf4 <- table(Mortgagestats$Action_Taken, logit.pred, dnn = c("Actual","Predicted"))
 logit.perf4
@@ -165,23 +193,24 @@ performance(logit.perf4)
 
 ```
 
-- After reviewing our models we see that logit.perf 2 has the highest accuracy with an ROC of 0.5. At our best threshold ROC level of .12 we see that our accuracy decreases, but our sensitivity increased drastically. This allows us to catch more denied mortgages while sacrificing some of the actual approved mortgages.  
+- After reviewing our models we see that logit.perf 2 has the highest accuracy with an ROC of 0.5. At our best threshold ROC level of .12 we see that our accuracy decreases, but our sensitivity increased drastically. This allows us to catch more denied mortgages while sacrificing some of the actual approved mortgages.
 
 
 D. Next, using 10-fold cross validation, estimate a variety of logistic regression models and evaluate their predictive performance across a range of threshold values in each case. The models can (should) include interaction variables and polynomial terms (e.g., quadratic and cubic variables). Of interest is identifying the model and threshold value that yield the smallest average test misclassification rate; however, you can also calculate model accuracy and the AUC. Document in a table the performance of the various models using the chosen performance measures.
 
+Support vector machines
+stepwise
+random forest
+
 ```{r}
+Y <- as.matrix(Mortgagestats$Action_Taken)
+X1 <- as.matrix((Mortgagestats[-c(2,3,4,6,9)]))
 
-Y <- as.matrix(na.omit(Mortgagestats$Action_Taken))
-Y[Y == "1"] <- 1
-Y[Y == "0"] <- 0
-X1 <- (Mortgagestats[-c(2)])
+nrow(Y) 
+nrow(X1)
 
-all(is.finite(Y))
-
-cv.reg1 <- cv.gamlr(X1, Y,
-	family="binomial", verb=TRUE, standardize=TRUE, nfold = 10)
-
+cv.reg1 <- cv.glm(Mortgagestats, MFit) 
+summary(cv.reg1)
 
 ```
 
@@ -190,6 +219,8 @@ E. Of the competing models that you estimated and thresholds that you evaluated,
 
 
 ```{r}
+
+
 
 ```
 

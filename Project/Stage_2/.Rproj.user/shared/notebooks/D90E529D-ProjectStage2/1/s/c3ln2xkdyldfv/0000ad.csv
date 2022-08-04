@@ -1,4 +1,0 @@
-"0","barplot(as.matrix(na.omit(Mortgagestats$Race)))"
-"2","Warning in apply(height, 2L, cumsum) :"
-"2"," NAs introduced by coercion
-"

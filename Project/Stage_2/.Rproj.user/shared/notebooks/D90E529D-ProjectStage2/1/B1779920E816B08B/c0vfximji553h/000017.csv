@@ -1,0 +1,8 @@
+"0","prob <- predict(MFit, Mortgagestats, type = ""response"")"
+"0",""
+"0",""
+"0","my_roc <- roc(Mortgagestats$Action_Taken ~ prob, plot = TRUE, print.auc = TRUE)"
+"2","Setting levels: control = 1, case = 0
+"
+"2","Setting direction: controls < cases
+"

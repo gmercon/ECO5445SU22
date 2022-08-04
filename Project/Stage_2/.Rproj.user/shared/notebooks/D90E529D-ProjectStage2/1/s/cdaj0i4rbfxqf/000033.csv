@@ -1,0 +1,8 @@
+"0","barplot(as.matrix(na.omit(Mortgagestats$NRace)))
+"
+"2","Warning:"
+"2"," Unknown or uninitialised column: `NRace`.
+"
+"2","Error in array(x, c(length(x), 1L), if (!is.null(names(x))) list(names(x),  : 
+  'data' must be of a vector type, was 'NULL'
+"
