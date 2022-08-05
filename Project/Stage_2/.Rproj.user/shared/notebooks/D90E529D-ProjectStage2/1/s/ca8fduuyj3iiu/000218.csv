@@ -1,0 +1,2 @@
+"0","plot(Race,Action_Taken, col = c(""blue"",""#33B2FF""), ylab = ""Approved(1), Denied(0)"", "
+"0","     xlab = ""White(1), Black(0)"", main = ""Approved by Race"")"

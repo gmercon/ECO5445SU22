@@ -1,0 +1,1 @@
+"0","hist((Mortgagestats$Loan_Amount/Mortgagestats$Purchase_Price), breaks = ""fd"", xlab = ""Loan to Purchase Price Ratio"", main = ""Histogram of Loan Amount to Purchase Price ratio"")"

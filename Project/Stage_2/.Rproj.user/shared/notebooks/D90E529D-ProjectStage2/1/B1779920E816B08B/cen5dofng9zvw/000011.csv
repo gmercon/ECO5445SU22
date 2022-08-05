@@ -1,5 +1,0 @@
-"0","cor(as.matrix(Mortgagestats[-c(2)]),Mortgagestats[c(2)])
-"
-"2","Error in cor(as.matrix(Mortgagestats[-c(2)]), Mortgagestats[c(2)]) : 
-  'x' must be numeric
-"

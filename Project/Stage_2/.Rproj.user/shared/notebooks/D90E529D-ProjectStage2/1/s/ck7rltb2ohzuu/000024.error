@@ -1,1 +1,0 @@
-{"frames":[],"message":"Error in cv.glm(X1, Y, family = \"binomial\", verb = TRUE, standardize = TRUE,  : \n  could not find function \"cv.glm\"\n"}

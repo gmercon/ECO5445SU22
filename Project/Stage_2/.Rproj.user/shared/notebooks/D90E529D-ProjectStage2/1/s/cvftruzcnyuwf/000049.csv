@@ -1,0 +1,7 @@
+"0","prob1 <- predict(reg2, Mortgagestats, type = ""response"")"
+"0","Reg1_Roc <- roc(Mortgagestats$Action_Taken ~ prob1)"
+"2","Setting levels: control = 1, case = 0
+"
+"2","Setting direction: controls < cases
+"
+"0","coords(Reg1_Roc, ""best"", ret = ""threshold"")"

@@ -1,0 +1,2 @@
+"0","plot(Marital_Status,Action_Taken, col = c(""blue"",""#33B2FF""), ylab = ""Approved(1), Denied(0)"", "
+"0","     xlab = ""Married(M), Seperated(S), Unmarried(U)"", main = ""Approved by Marriage Status"")"

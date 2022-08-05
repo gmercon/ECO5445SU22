@@ -1,0 +1,11 @@
+"0","reg.pred <- factor(prob1 > .136, levels = c(FALSE,TRUE),"
+"0","                     labels = c(""Approved"",""Denied""))"
+"0","reg.perf1 <- table(Mortgagestats$Action_Taken, reg.pred, dnn = c(""Actual"",""Predicted""))"
+"0",""
+"0","prob2 <- predict(reg5, Mortgagestats, type = ""response"")"
+"0","Reg2_Roc <- roc(Mortgagestats$Action_Taken ~ prob2)"
+"2","Setting levels: control = 1, case = 0
+"
+"2","Setting direction: controls < cases
+"
+"0","coords(Reg2_Roc, ""best"", ret = ""threshold"")"

@@ -1,0 +1,30 @@
+"0","performance(reg.perf1)"
+"1","Sensitivity = 0.6
+Specificity = 0.7878
+Positive Predictive Value = 0.2755
+Negative Predictive Value = 0.7878
+Accuracy = 0.7655"
+"0","performance(reg.perf2)"
+"1","Sensitivity = 0.6545
+Specificity = 0.7403
+Positive Predictive Value = 0.2532
+Negative Predictive Value = 0.7403
+Accuracy = 0.7302"
+"0","performance(reg.perf3)"
+"1","Sensitivity = 0.6618
+Specificity = 0.7296
+Positive Predictive Value = 0.2476
+Negative Predictive Value = 0.7296
+Accuracy = 0.7216"
+"0","performance(forest.perf)"
+"1","Sensitivity = 0.9964
+Specificity = 1
+Positive Predictive Value = 1
+Negative Predictive Value = 1
+Accuracy = 0.9996"
+"0","performance(svm.perf)"
+"1","Sensitivity = 0.0291
+Specificity = 0.9995
+Positive Predictive Value = 0.8889
+Negative Predictive Value = 0.9995
+Accuracy = 0.8845"

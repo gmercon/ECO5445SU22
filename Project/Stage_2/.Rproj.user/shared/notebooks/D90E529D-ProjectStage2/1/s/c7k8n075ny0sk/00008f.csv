@@ -1,0 +1,1 @@
+"0","hist(log(Mortgagestats$Income_Thousands), breaks = ""fd"", xlab = ""Income(Thousands)"", main = )"

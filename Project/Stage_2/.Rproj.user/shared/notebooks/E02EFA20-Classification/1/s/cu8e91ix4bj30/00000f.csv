@@ -1,0 +1,3 @@
+"0","ctree.pred <- predict(fit.ctree, df.validate, type = 'response')"
+"0",""
+"0","ctree.perf <- table(df.validate$class, ctree.pred, dnn = c(""Actual"",""Predicted""))"

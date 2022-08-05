@@ -1,0 +1,4 @@
+"0","plot(Mortgage_Credit_History, Action_Taken,col = c(""blue"",""#33B2FF""),"
+"0","     ylab = ""Approved(1), Denied(0)"","
+"0","     xlab = ""No Late Payments(1), No History(2), Late Payments (3,4)"", "
+"0","     main = ""Approved based on Mortgage Credit History"")"

@@ -1,0 +1,2 @@
+"0","plot(DTI_Housing,Action_Taken, col = ""#51CF44"",  ylab = ""Approved(1), Denied(2)"","
+"0","     xlab = ""Housing Debt to Income(DTI) Ratio"", main = ""Approved based on Housing DTI Ratio"")"

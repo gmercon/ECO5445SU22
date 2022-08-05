@@ -1,0 +1,2 @@
+"0","plot(Income_Thousands,Action_Taken, col = ""#51CF44"", ylab = ""Approved(1), Denied(2)"", "
+"0","     xlab = ""Income in Thousands"", main = ""Approved based on Income"")"

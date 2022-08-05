@@ -1,0 +1,6 @@
+"0","final.prob <- as.numeric(predict(reg.forest, Mortgagestats, type = ""response""))"
+"0","final_roc <- roc(Mortgagestats$Action_Taken ~ final.prob, plot = TRUE, print.auc = TRUE)"
+"2","Setting levels: control = 1, case = 0
+"
+"2","Setting direction: controls < cases
+"

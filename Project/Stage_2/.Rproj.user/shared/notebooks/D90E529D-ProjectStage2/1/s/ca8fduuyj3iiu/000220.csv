@@ -1,0 +1,2 @@
+"0","plot(Purchase_Price,Action_Taken, col = ""#51CF44"",  ylab = ""Approved(1), Denied(2)"","
+"0","     xlab = ""Purchase Price(Thousands)"", main = ""Approved based on Purchase Price"")"

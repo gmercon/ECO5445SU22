@@ -1,0 +1,5 @@
+"0","set.seed(1234)"
+"0",""
+"0","dtree <- rpart(class ~., data = df.train, method = 'class', parms = list(split = 'information'))"
+"0",""
+"0","prp(dtree, type = 2, extra = 104,fallen.leaves = T)"

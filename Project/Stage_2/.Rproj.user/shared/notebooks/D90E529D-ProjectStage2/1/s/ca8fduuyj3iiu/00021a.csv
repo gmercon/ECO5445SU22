@@ -1,0 +1,2 @@
+"0","plot(Sex,Action_Taken, col = c(""blue"",""#33B2FF""), ylab = ""Approved(1), Denied(0)"", "
+"0","     xlab = ""Male(1), Female(0)"", main = ""Approved by Applicant's Sex"")"
